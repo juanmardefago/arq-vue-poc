@@ -28,10 +28,8 @@ module.exports = function (app) {
         },
       },
       address: {
-        name: {
-          type: String,
-          required: true,
-        },
+        type: String,
+        required: true,
       },
     },
     type: {
