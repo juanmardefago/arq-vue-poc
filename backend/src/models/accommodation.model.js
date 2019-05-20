@@ -44,7 +44,15 @@ module.exports = function (app) {
       required: true,
       min: 1,
       max: 5,
-    }
+    },
+    approved: {
+      type: Boolean,
+      default: false,
+    },
+    updated: {
+      type: Date,
+      default: Date.now
+    },
   }, {
     timestamps: true
   });
