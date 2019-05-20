@@ -1,25 +1,28 @@
 <template>
-  <div>
+  <div class="home">
+    <div class="top-bar">
+      <button type="button" @click="navigateTo('accommodations-form')">
+        Go to form
+      </button>
+      <button type="button" @click="navigateTo('accommodations')">
+        Go to lists
+      </button>
+    </div>
+    <router-view />
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  name: 'Home',
-  data () {
-    return {
-      accommodations: []
+  name: "Home",
+  methods: {
+    navigateTo (path) {
+      this.$router.push(path);
     }
-  },
-  mounted () {
-    axios
-      .get()
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
