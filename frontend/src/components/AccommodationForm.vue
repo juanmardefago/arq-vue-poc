@@ -1,37 +1,41 @@
 <template>
-  <div class="accommodation-form">
-    <multiselect
-      v-model="provinceValue"
-      :options="provinceOptions"
-      :custom-label="getNameFromObject"
-      placeholder="Provincia"
-      label="nombre"
-      track-by="nombre"
-      v-on:input="fetchCitiesForProvince"
-    />
-    <multiselect
-      v-model="cityValue"
-      :options="cityOptions"
-      :custom-label="getNameFromObject"
-      placeholder="Ciudad"
-      label="nombre"
-      track-by="nombre"
-    />
-    <input placeholder="Dirección" v-model="addressValue" />
-    <multiselect
-      v-model="accommodationValue"
-      :options="accommodationOptions"
-      placeholder="Tipo de alojamiento"
-    />
-    <multiselect
-      v-model="categoryValue"
-      :options="categoryOptions"
-      placeholder="Categoria"
-    />
-    <button type="button" v-if="isValid" v-on:click="submitData">
-      Submit data
-    </button>
-  </div>
+  <v-form v-model="isValid">
+    <v-container>
+      <v-layout>
+        <v-flex>
+          <v-select
+            v-model="provinceValue"
+            :items="provinceOptions"
+            item-text="nombre"
+            placeholder="Provincia"
+            v-on:input="fetchCitiesForProvince"
+            return-object
+          />
+          <v-select
+            v-model="cityValue"
+            :items="cityOptions"
+            item-text="nombre"
+            placeholder="Ciudad"
+            return-object
+          />
+          <v-text-field placeholder="Dirección" v-model="addressValue" />
+          <v-select
+            v-model="accommodationValue"
+            :items="accommodationOptions"
+            placeholder="Tipo de alojamiento"
+          />
+          <v-select
+            v-model="categoryValue"
+            :items="categoryOptions"
+            placeholder="Categoria"
+          />
+          <v-button type="button" v-if="isValid" v-on:click="submitData">
+            Submit data
+          </v-button>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-form>
 </template>
 
 <script>
@@ -68,9 +72,6 @@ export default {
     }
   },
   methods: {
-    getNameFromObject({ nombre }) {
-      return nombre;
-    },
     fetchCitiesForProvince() {
       if (this.provinceValue) {
         axios
