@@ -7,7 +7,7 @@
             v-model="provinceValue"
             :items="provinceOptions"
             item-text="nombre"
-            placeholder="Provincia"
+            label="Provincia"
             v-on:input="fetchCitiesForProvince"
             return-object
           />
@@ -15,19 +15,34 @@
             v-model="cityValue"
             :items="cityOptions"
             item-text="nombre"
-            placeholder="Ciudad"
+            label="Ciudad"
             return-object
           />
-          <v-text-field placeholder="Dirección" v-model="addressValue" />
+          <v-text-field label="Dirección" v-model="addressValue" />
           <v-select
             v-model="accommodationValue"
             :items="accommodationOptions"
-            placeholder="Tipo de alojamiento"
+            label="Tipo de alojamiento"
+          />
+          <v-text-field
+            label="Precio por noche con Desayuno"
+            v-model="breakfastFee"
+            type="number"
+          />
+          <v-text-field
+            label="Precio por noche con Media Pensión"
+            v-model="halfPensionFee"
+            type="number"
+          />
+          <v-text-field
+            label="Precio por noche con Pensión Completa"
+            v-model="fullPensionFee"
+            type="number"
           />
           <v-select
             v-model="categoryValue"
             :items="categoryOptions"
-            placeholder="Categoria"
+            label="Categoria"
           />
           <v-button type="button" v-if="isValid" v-on:click="submitData">
             Submit data
@@ -39,14 +54,10 @@
 </template>
 
 <script>
-import Multiselect from "vue-multiselect";
 import axios from "axios";
 
 export default {
   name: "AccommodationForm",
-  components: {
-    Multiselect
-  },
   data() {
     return {
       provinceValue: null,
@@ -57,7 +68,10 @@ export default {
       accommodationValue: null,
       accommodationOptions: ["Hotel", "Posada", "Cabaña", "Otro"],
       categoryValue: 5,
-      categoryOptions: [1, 2, 3, 4, 5]
+      categoryOptions: [1, 2, 3, 4, 5],
+      breakfastFee: 0,
+      halfPensionFee: 0,
+      fullPensionFee: 0
     };
   },
   computed: {
@@ -103,7 +117,12 @@ export default {
             address: this.addressValue
           },
           category: this.categoryValue,
-          type: this.accommodationValue
+          type: this.accommodationValue,
+          pensions: {
+            breakfast: this.breakfastFee,
+            halfPension: this.halfPensionFee,
+            fullPension: this.fullPensionFee
+          }
         });
       }
     }
@@ -120,8 +139,6 @@ export default {
   }
 };
 </script>
-
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
 .accommodation-form {
