@@ -23,11 +23,11 @@ export default {
   data() {
     return {
       headers: [
-         { text: 'Province', align: 'center', value: '', sortable: false },
-         { text: 'City', align: 'center', value: '', sortable: false },
-         { text: 'Address', align: 'center', value: '', sortable: false },
-         { text: 'Category', align: 'center', value: '', sortable: false },
-         { text: 'Type', align: 'center', value: '', sortable: false }
+         { text: 'Provincia', align: 'center', value: '', sortable: false },
+         { text: 'Ciudad', align: 'center', value: '', sortable: false },
+         { text: 'Dirección', align: 'center', value: '', sortable: false },
+         { text: 'Categoría', align: 'center', value: '', sortable: false },
+         { text: 'Tipo', align: 'center', value: '', sortable: false }
        ],
       accommodations: []
     };

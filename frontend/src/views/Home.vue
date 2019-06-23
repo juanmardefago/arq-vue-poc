@@ -9,7 +9,7 @@
         <v-toolbar-side-icon
           @click="toggleNavDrawer"
         />
-        <v-toolbar-title class="white--text">Accommodation APP Vue</v-toolbar-title>
+        <v-toolbar-title class="white--text">Alojamientos ARQ</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-navigation-drawer
@@ -28,7 +28,7 @@
             </v-list-tile-action>
 
             <v-list-tile-content>
-              <v-list-tile-title>Add new accommodation</v-list-tile-title>
+              <v-list-tile-title>Agregar alojamiento</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile
@@ -40,7 +40,7 @@
             </v-list-tile-action>
 
             <v-list-tile-content>
-              <v-list-tile-title>Accommodation lists</v-list-tile-title>
+              <v-list-tile-title>Ver alojamientos</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
