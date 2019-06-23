@@ -45,7 +45,7 @@
             label="Categoria"
           />
           <v-btn type="button" color="primary" v-if="isValid" v-on:click="submitData">
-            Submit data
+            Guardar
           </v-btn>
         </v-flex>
       </v-layout>
