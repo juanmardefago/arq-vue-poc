@@ -1,9 +1,18 @@
 <template>
-  <ul class="accommodation-list">
-    <li v-for="item in accommodations" :key="item._id">
-      {{ item }}
-    </li>
-  </ul>
+
+  <v-data-table
+    :headers="headers"
+    :items="accommodations"
+    class="elevation-1"
+  >
+    <template align='' v-slot:items="acc">
+      <td>{{ acc.item.location.province.name }}</td>
+      <td class="text-xs-center">{{ acc.item.location.city.name }}</td>
+      <td class="text-xs-center">{{ acc.item.location.address }}</td>
+      <td class="text-xs-center">{{ acc.item.category }}</td>
+      <td class="text-xs-center">{{ acc.item.type }}</td>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
@@ -13,6 +22,13 @@ export default {
   name: "AccommodationList",
   data() {
     return {
+      headers: [
+         { text: 'Provincia', align: 'center', value: '', sortable: false },
+         { text: 'Ciudad', align: 'center', value: '', sortable: false },
+         { text: 'Dirección', align: 'center', value: '', sortable: false },
+         { text: 'Categoría', align: 'center', value: '', sortable: false },
+         { text: 'Tipo', align: 'center', value: '', sortable: false }
+       ],
       accommodations: []
     };
   },

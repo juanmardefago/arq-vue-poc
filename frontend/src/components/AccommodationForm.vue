@@ -44,9 +44,9 @@
             :items="categoryOptions"
             label="Categoria"
           />
-          <v-button type="button" v-if="isValid" v-on:click="submitData">
-            Submit data
-          </v-button>
+          <v-btn type="button" color="primary" v-if="isValid" v-on:click="submitData">
+            Guardar
+          </v-btn>
         </v-flex>
       </v-layout>
     </v-container>
