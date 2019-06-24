@@ -43,13 +43,26 @@ module.exports = function (app) {
       min: 1,
       max: 5,
     },
+    pensions: {
+      breakfast: {
+        type: Number,
+        required: true,
+        min: 0,
+      },
+      halfPension: {
+        type: Number,
+        required: true,
+        min: 0,
+      },
+      fullPension: {
+        type: Number,
+        required: true,
+        min: 0,
+      }
+    },
     approved: {
       type: Boolean,
       default: false,
-    },
-    updated: {
-      type: Date,
-      default: Date.now
     },
   }, {
     timestamps: true
