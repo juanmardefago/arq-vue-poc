@@ -4,6 +4,8 @@
     "start-backend": "cd backend && npm run start",
     "start-backend-dev": "cd backend && npm run dev",
     "start": "parallelshell 'npm run start-backend' 'npm run start-frontend'",
-    "dev": "parallelshell 'npm run start-backend-dev' 'npm run start-frontend'"
+    "dev": "parallelshell 'npm run start-backend-dev' 'npm run start-frontend'",
+    "lint": "cd frontend && npm run lint && cd ../backend && npm run eslint",
+    "build": "cd frontend && npm run build"
   }
 }
