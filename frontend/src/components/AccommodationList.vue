@@ -6,6 +6,8 @@
       <td class="text-xs-center">{{ acc.item.location.address }}</td>
       <td class="text-xs-center">{{ acc.item.category }}</td>
       <td class="text-xs-center">{{ acc.item.type }}</td>
+      <td class="text-xs-center"><a :href="'/accommodation/' + acc.item._id">Detalle</a></td>
+      <td class="text-xs-center"><v-btn color="warning" v-on:click="deleteAccommodation(acc.item)">Borrar</v-btn></td>
     </template>
   </v-data-table>
 </template>
@@ -18,12 +20,13 @@ export default {
   data() {
     return {
       headers: [
-        { text: "Provincia", align: "center", value: "", sortable: false },
-        { text: "Ciudad", align: "center", value: "", sortable: false },
-        { text: "Dirección", align: "center", value: "", sortable: false },
-        { text: "Categoría", align: "center", value: "", sortable: false },
-        { text: "Tipo", align: "center", value: "", sortable: false }
-      ],
+         { text: 'Provincia', align: 'center', value: '', sortable: false },
+         { text: 'Ciudad', align: 'center', value: '', sortable: false },
+         { text: 'Dirección', align: 'center', value: '', sortable: false },
+         { text: 'Categoría', align: 'center', value: '', sortable: false },
+         { text: 'Tipo', align: 'center', value: '', sortable: false },
+         { text: '', align: 'center', value: '', sortable: false }
+       ],
       accommodations: []
     };
   },
@@ -37,6 +40,15 @@ export default {
       .then(response => {
         this.accommodations = response.data.data;
       });
+  },
+  methods: {
+    deleteAccommodation(item) {
+      axios
+        .delete(`${process.env.VUE_APP_BACKEND_URL}/accommodation/${item._id}`)
+        .then(() => {
+          this.accommodations.splice(this.accommodations.indexOf(item), 1);
+        });
+    }
   }
 };
 </script>
