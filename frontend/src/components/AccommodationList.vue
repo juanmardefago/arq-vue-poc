@@ -1,11 +1,6 @@
 <template>
-
-  <v-data-table
-    :headers="headers"
-    :items="accommodations"
-    class="elevation-1"
-  >
-    <template align='' v-slot:items="acc">
+  <v-data-table :headers="headers" :items="accommodations" class="elevation-1">
+    <template align="" v-slot:items="acc">
       <td>{{ acc.item.location.province.name }}</td>
       <td class="text-xs-center">{{ acc.item.location.city.name }}</td>
       <td class="text-xs-center">{{ acc.item.location.address }}</td>
@@ -23,12 +18,12 @@ export default {
   data() {
     return {
       headers: [
-         { text: 'Provincia', align: 'center', value: '', sortable: false },
-         { text: 'Ciudad', align: 'center', value: '', sortable: false },
-         { text: 'Dirección', align: 'center', value: '', sortable: false },
-         { text: 'Categoría', align: 'center', value: '', sortable: false },
-         { text: 'Tipo', align: 'center', value: '', sortable: false }
-       ],
+        { text: "Provincia", align: "center", value: "", sortable: false },
+        { text: "Ciudad", align: "center", value: "", sortable: false },
+        { text: "Dirección", align: "center", value: "", sortable: false },
+        { text: "Categoría", align: "center", value: "", sortable: false },
+        { text: "Tipo", align: "center", value: "", sortable: false }
+      ],
       accommodations: []
     };
   },
