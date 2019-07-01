@@ -29,7 +29,11 @@ export default {
   },
   mounted() {
     axios
-      .get(`${process.env.VUE_APP_BACKEND_URL}/accommodation`)
+      .get(`${process.env.VUE_APP_BACKEND_URL}/accommodation`, {
+        headers: {
+          Authorization: this.$store.state.jwt
+        }
+      })
       .then(response => {
         this.accommodations = response.data.data;
       });

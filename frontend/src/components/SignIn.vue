@@ -2,7 +2,7 @@
   <div>
     <h1 v-if="!logged">Ingresa!</h1>
     <h1 v-if="logged">Ingresaste satisfactoriamente!</h1>
-    <v-form v-if="!logged" v-model="isValid">
+    <v-form v-if="!logged">
       <v-container>
         <v-layout>
           <v-flex>
@@ -59,6 +59,11 @@ export default {
       }
     }
   },
-  computed: mapState(["logged"])
+  computed: {
+    ...mapState(["logged"]),
+    isValid() {
+      return this.email && this.password;
+    }
+  }
 };
 </script>

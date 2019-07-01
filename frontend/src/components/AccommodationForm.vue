@@ -1,5 +1,5 @@
 <template>
-  <v-form v-model="isValid">
+  <v-form>
     <v-container>
       <v-layout>
         <v-flex>
@@ -109,26 +109,34 @@ export default {
     },
     submitData() {
       if (this.isValid) {
-        axios.post(`${process.env.VUE_APP_BACKEND_URL}/accommodation`, {
-          location: {
-            province: {
-              name: this.provinceValue.nombre,
-              id: this.provinceValue.id
+        axios.post(
+          `${process.env.VUE_APP_BACKEND_URL}/accommodation`,
+          {
+            location: {
+              province: {
+                name: this.provinceValue.nombre,
+                id: this.provinceValue.id
+              },
+              city: {
+                name: this.cityValue.nombre,
+                id: this.cityValue.id
+              },
+              address: this.addressValue
             },
-            city: {
-              name: this.cityValue.nombre,
-              id: this.cityValue.id
-            },
-            address: this.addressValue
+            category: this.categoryValue,
+            type: this.accommodationValue,
+            pensions: {
+              breakfast: this.breakfastFee,
+              halfPension: this.halfPensionFee,
+              fullPension: this.fullPensionFee
+            }
           },
-          category: this.categoryValue,
-          type: this.accommodationValue,
-          pensions: {
-            breakfast: this.breakfastFee,
-            halfPension: this.halfPensionFee,
-            fullPension: this.fullPensionFee
+          {
+            headers: {
+              Authorization: this.$store.state.jwt
+            }
           }
-        });
+        );
       }
     }
   },
