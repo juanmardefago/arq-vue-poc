@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     navigateTo(path) {
-      this.$router.push(path);
+      this.$router.replace({ name: path });
     },
     toggleNavDrawer() {
       this.drawer = !this.drawer;

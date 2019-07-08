@@ -6,7 +6,7 @@
       <td class="text-xs-center">{{ acc.item.location.address }}</td>
       <td class="text-xs-center">{{ acc.item.category }}</td>
       <td class="text-xs-center">{{ acc.item.type }}</td>
-      <td class="text-xs-center"><a :href="'/accommodation/' + acc.item._id">Detalle</a></td>
+      <td class="text-xs-center" @click="navigateTo('accommodation', acc.item._id)"><a>Detalle</a></td>
       <td class="text-xs-center"><v-btn color="warning" v-on:click="deleteAccommodation(acc.item)">Borrar</v-btn></td>
     </template>
   </v-data-table>
@@ -48,7 +48,10 @@ export default {
         .then(() => {
           this.accommodations.splice(this.accommodations.indexOf(item), 1);
         });
-    }
+    },
+    navigateTo(path, id) {
+        this.$router.push(`${path}/${id}`);
+      }
   }
 };
 </script>
