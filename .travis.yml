@@ -20,10 +20,12 @@ script:
 deploy:
 - provider: script
   script: frontend/docker_push.sh
+  skip_cleanup: true
   on:
     branch: master
 - provider: script
   script: backend/docker_push.sh
+  skip_cleanup: true
   on:
     branch: master
 env:
