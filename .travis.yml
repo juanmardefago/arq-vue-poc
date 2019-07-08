@@ -19,12 +19,12 @@ script:
 - npm run build
 deploy:
 - provider: script
-  script: docker_push_frontend.sh
+  script: bash docker_push_frontend.sh
   skip_cleanup: true
   on:
     branch: master
 - provider: script
-  script: docker_push_backend.sh
+  script: bash docker_push_backend.sh
   skip_cleanup: true
   on:
     branch: master
