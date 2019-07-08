@@ -145,9 +145,6 @@ export default {
       .get(process.env.VUE_APP_PROVINCE_API_URL)
       .then(response => {
         this.provinceOptions = response.data.provincias;
-      })
-      .catch(err => {
-        console.log(err);
       });
   }
 };

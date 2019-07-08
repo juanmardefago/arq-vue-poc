@@ -34,7 +34,7 @@
               <v-list-tile-content class="align-end">{{ this.accommodation.type }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
-              <v-list-tile-content class="font-weight-bold">Precio por noche con</v-list-tile-content></v-list-tile-content>
+              <v-list-tile-content class="font-weight-bold">Precio por noche con</v-list-tile-content>
             </v-list-tile>
             <v-divider inset class="align-center"></v-divider>
             <v-list-tile>
