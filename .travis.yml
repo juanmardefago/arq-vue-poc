@@ -1,20 +1,32 @@
 language: node_js
 node_js:
-  - "10.15.1"
+- 10.15.1
+services:
+- docker
 cache:
-  # Caches $HOME/.npm when npm ci is default script command
-  # Caches node_modules in all other cases
   npm: true
   directories:
-    # we also need to cache folder with Cypress binary
-    - ~/.cache
+  - "~/.cache"
 install:
-  - npm ci
+- npm ci
 before_script:
-  - npm i -g vue-cli
-  - cd frontend && npm i
-  - cd ../backend && npm i
-  - cd ../
+- npm i -g vue-cli
+- cd frontend && npm i
+- cd ../backend && npm i
+- cd ../
 script:
-  - npm run lint
-  - npm run build
+- npm run lint
+- npm run build
+deploy:
+- provider: script
+  script: frontend/docker_push.sh
+  on:
+    branch: master
+- provider: script
+  script: backend/docker_push.sh
+  on:
+    branch: master
+env:
+  global:
+  - secure: DuN1Uo6PwzCrdSaeK++wqYsIG7gf0RBbNh9aWL1nHCcuEbVywLN9T4rC9yTuQvRNO9ot6OWEbNd++V87YIiThYJMrdVeMg2WsE6F2cuYqiVLJp6hhGNf42sWPYoYW1DwZyh0a5bGtDOlgxs+VyrJebx5VEXhH5B61xfoOzVrUGZNFLCwGU9mpvKIG0GqO4wtqpbqf3hC69q2CtaB30XoU+9oRCI9oY/6BxJ0bjQqgLQfpMH00QSbDB1EVA3hwkaQGhO2hth0HBX8+hd/UCAv4UgTeB2PpelpvAhJi1fCxqUNBcOWlAZiIHmB9MCgZ8i03PfSBZXa5hx5hANni6psQsjsQVceSbCCQGq/yFkUROYLfA+wnwFnR1t2eQD1WodqT7TY7xsbUcUyH/8Px872esAcu3uzjL/lRxUwC6Zfm8MBkXfmZIANC8wmhnBcpTfwvV6Lrz+H2BORXvZ9hQaeyRC9QYSKSuRZUOTbh7ryvdo3kIORvot/JIX2mVRPK4tP6/vDwzoqnesRrosHUZt3mPoC/dsbuF/7pCwnm8amgKZRiNGyrU7d9OGA+bKObjbQrEoSNiDUbvdHnuk8P/aCxRftXvdWAU482ltnOoF3k0PADNfeDVXt3V/wiigdvaj5cfASgne99G+spxDNzVxsA21kjxF2CBGlkKFATiT7fig=
+  - secure: tcVEXhTZGmMetX1hrWZDBBrotavIIeNQQ09fQjdIDFrCSfHSH2NLPpTFRMA1tOyZ12K/eDkw/2ReAjSHFrXhfyI41dwREIPgdFpJnb3ByMCTAyoN0AKdiku0B9fOZN5LXWUGROhmouCy1X0wFi3eVnj6WBHdoyMH0aTY7bCmiVDUj/RJ6PEI8D9Nqn4sjYOsr+yDSkZ6E3lH+cvPBJWhUWTorPv4v//vHSe/zxCoDfO0pVivJJWjvPc/vqg/22qZobn+uh6yUQY0T3jh2ebUHiW6d5r4WY0bb3r/kmrRHcmH3LT8qRWDnYKFKi9JOhhcvQomP5uxJtmg10L1zxspChv8uw8KNMyevvsZZIVCapHCFyuTWfImQ3Db7pNLFfwbhZyiT0JPWvzz0LlGJ3YDXM3jGxlZLuEN6YObiPFegGkZQpOCI+QFHMWUw1ZGXn32Y9wM7LREM6Md5f/r+s47wxxSvf1UcTEkfZtWALUBHUIieBxOzMzs8Xi56Jta1lxIwxXvbhU6V90MchqYE7z9F/MbDfZtGtMQnYHGSFqZoYg98Y7TPz1P60sKMmnfV0V2c1UHcRNmSkXfu9uylRa7URCuofVywMcACq01OTSAFzvA99vxbMEKZnktEPSvrX27hm3o8cIE8D+v0Iz9I4N3QCrO2llqz2XOL3wRVz6xy/A=
