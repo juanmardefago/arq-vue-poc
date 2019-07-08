@@ -44,12 +44,21 @@
             :items="categoryOptions"
             label="Categoria"
           />
-          <v-btn
-            type="button"
-            color="primary"
-            v-if="isValid"
-            v-on:click="submitData"
-          >
+          <!-- <input
+            type="file"
+            ref="image"
+            accept="image/*"
+            @change="onFilePicked"
+          > -->
+            <input
+              type="file"
+              ref="photos"
+              accept="image/*"
+              multiple="multiple"
+              @change="onFileSelected"
+            >
+            <br/>
+          <v-btn type="button" color="primary" v-if="isValid" v-on:click="submitData">
             Guardar
           </v-btn>
         </v-flex>
@@ -76,7 +85,8 @@ export default {
       categoryOptions: [1, 2, 3, 4, 5],
       breakfastFee: 0,
       halfPensionFee: 0,
-      fullPensionFee: 0
+      fullPensionFee: 0,
+      photos: []
     };
   },
   computed: {
@@ -136,8 +146,14 @@ export default {
               Authorization: this.$store.state.jwt
             }
           }
-        );
+        });
+        axios.post(`${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`, {
+          photos: this.photos, headers: {  'Content-Type': 'multipart/form-data' }
+        });
       }
+    },
+    onFileSelected() {
+      this.photos = this.$refs.photos.files;
     }
   },
   mounted() {
