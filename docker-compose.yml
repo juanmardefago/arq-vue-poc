@@ -5,8 +5,6 @@ services:
     image: juanmardefago/arq1-frontend
     ports:
       - "80:5000"
-    environment:
-      - VUE_APP_BACKEND_URL=http://backend:3030
     depends_on:
       - backend
   backend:
