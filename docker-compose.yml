@@ -19,3 +19,5 @@ services:
     image: mongo:4.0.10-xenial
     ports:
       - "27018:27017"
+    volumes:
+      - ./data:/data/db
