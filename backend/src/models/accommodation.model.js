@@ -64,6 +64,9 @@ module.exports = function (app) {
       type: Boolean,
       default: false,
     },
+    photos: {
+      type: [String]
+    }
   }, {
     timestamps: true
   });

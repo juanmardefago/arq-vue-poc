@@ -2,6 +2,10 @@
 const createService = require('feathers-mongoose');
 const createModel = require('../../models/accommodation.model');
 const hooks = require('./accommodation.hooks');
+// Multer requirements
+var multer  = require('multer');
+const crypto = require('crypto');
+const mime = require('mime');
 
 module.exports = function (app) {
   const Model = createModel(app);
@@ -16,6 +20,29 @@ module.exports = function (app) {
   // Initialize our service with any options it requires
   app.use('/accommodation', createService(options));
   // app.use('/accommodation/:id', createService({ Model, id}));
+
+  // Multer storage config
+  var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads/')
+    },
+    filename: function (req, file, cb) {
+      crypto.pseudoRandomBytes(16, function (err, raw) {
+        cb(null, raw.toString('hex') + Date.now() + '.' + mime.extension(file.mimetype));
+      });
+    }
+  });
+  var upload = multer({ storage: storage });
+
+  // Image upload endpoint
+  app.use('/accommodation/upload', upload.array('photos'), {
+    create(req, res, next) {
+          if (req.file) {
+              console.log('Uploading File');
+          }
+     return Promise.resolve(res);
+    }
+  });
 
   // Get our initialized service so that we can register hooks
   const service = app.service('accommodation');

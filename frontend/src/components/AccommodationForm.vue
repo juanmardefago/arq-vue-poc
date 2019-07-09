@@ -44,12 +44,6 @@
             :items="categoryOptions"
             label="Categoria"
           />
-          <!-- <input
-            type="file"
-            ref="image"
-            accept="image/*"
-            @change="onFilePicked"
-          > -->
             <input
               type="file"
               ref="photos"
@@ -147,11 +141,13 @@ export default {
             }
           }
         });
-        axios.post(`${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`, {
-          photos: this.photos, headers: {  'Content-Type': 'multipart/form-data' }
-        });
-      }
-    },
+
+        let formData = new FormData()
+        formData.append('photos', this.photos[0])
+        let config = { headers: { 'Content-Type': 'multipart/form-data' } }
+        axios.post(`${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`, formData , config);
+              }
+            },
     onFileSelected() {
       this.photos = this.$refs.photos.files;
     }
