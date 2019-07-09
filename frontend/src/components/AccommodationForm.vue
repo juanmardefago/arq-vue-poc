@@ -141,11 +141,9 @@ export default {
     }
   },
   mounted() {
-    axios
-      .get(process.env.VUE_APP_PROVINCE_API_URL)
-      .then(response => {
-        this.provinceOptions = response.data.provincias;
-      });
+    axios.get(process.env.VUE_APP_PROVINCE_API_URL).then(response => {
+      this.provinceOptions = response.data.provincias;
+    });
   }
 };
 </script>

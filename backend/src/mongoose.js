@@ -2,10 +2,7 @@ const mongoose = require('mongoose');
 
 function connectToMongo(uri, options, retriesLeft, retryDelay) {
   mongoose.connect(uri, options)
-    .then(() => console.log("MongoDB client connected"))
-    .catch((err) => {
-      console.log("MongoDB connection failed, error: ");
-      console.log(err);
+    .catch(() => {
       if(retriesLeft > 0) {
         setTimeout(connectToMongo(uri, options, retriesLeft - 1), retryDelay);
       }
