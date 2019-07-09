@@ -44,7 +44,11 @@ export default {
   methods: {
     deleteAccommodation(item) {
       axios
-        .delete(`${process.env.VUE_APP_BACKEND_URL}/accommodation/${item._id}`)
+        .delete(`${process.env.VUE_APP_BACKEND_URL}/accommodation/${item._id}`, {
+          headers: {
+                  Authorization: this.$store.state.jwt
+                }
+              })
         .then(() => {
           this.accommodations.splice(this.accommodations.indexOf(item), 1);
         });

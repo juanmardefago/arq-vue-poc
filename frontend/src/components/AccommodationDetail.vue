@@ -71,7 +71,11 @@ export default {
   },
   mounted() {
       axios
-        .get(`${process.env.VUE_APP_BACKEND_URL}/accommodation/${this.$route.params.id}`)
+        .get(`${process.env.VUE_APP_BACKEND_URL}/accommodation/${this.$route.params.id}`, {
+          headers: {
+                  Authorization: this.$store.state.jwt
+                }
+              })
         .then((response) => {
           let data = response.data
           this.accommodation = { location: {
