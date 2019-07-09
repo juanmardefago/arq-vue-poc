@@ -67,6 +67,14 @@
             </v-list-tile>
           </v-list>
         </v-card>
+        <v-carousel>
+          <v-carousel-item
+            v-for="(photo,i) in this.accommodation.photos"
+            :key="i"
+            cycle=false>
+              <img :src="'http://localhost:3030/' + photo" style="width:100%;" />
+        </v-carousel-item>
+  </v-carousel>
       </v-flex>
     </v-layout>
   </v-container>
@@ -79,14 +87,8 @@ export default {
   name: "AccommodationDetail",
   data() {
     return {
-      accommodation: {
-        location: { province: { name: "" }, city: { name: "" }, address: "" },
-        category: 0,
-        type: "",
-        breakfast: "",
-        fullPension: "",
-        halfPension: ""
-      }
+       accommodation: { location: { province: { name: '' }, city: { name: '' }, address: '' }, category: 0, type: '', breakfast: '',
+       fullPension: '',  halfPension: '', photos: [] }
     };
   },
   methods: {},
@@ -118,9 +120,14 @@ export default {
           type: data.type,
           breakfast: data.pensions.breakfast,
           fullPension: data.pensions.fullPension,
-          halfPension: data.pensions.halfPension
-        };
-      });
+          halfPension: data.pensions.halfPension,
+          photos: data.photos
+          }
+        });
   }
 };
 </script>
+<!-- overwriting carousel style to center images -->
+<style>
+.v-responsive__content { margin: auto; }
+</style>
