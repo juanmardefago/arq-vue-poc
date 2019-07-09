@@ -36,15 +36,17 @@ module.exports = function (app) {
 
 // Image upload endpoint
   app.post('/accommodation/upload',  upload.array('photos'), (req, res, next) => {
-  const files = req.files
-  console.log(req.files);
-  if (!files) {
-    const error = new Error('Please upload a file')
-    error.httpStatusCode = 400
-    return next(error)
-  }
+    const files = req.files
+    console.log(req.files);
     res.send(files)
-
+    const id = req.body.id;
+    const paths = files.map((photo) => {
+      return photo.path;
+    });
+    console.log(paths);
+    Model.findByIdAndUpdate(id, { "photos": paths }, {}, (res) => {
+      return res;
+    });
 })
 
   // Get our initialized service so that we can register hooks
