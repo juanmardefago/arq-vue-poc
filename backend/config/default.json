@@ -7,6 +7,8 @@
     "max": 50
   },
   "mongodb": "mongodb://localhost:27017/backend",
+  "mongoConnectionRetries": 5,
+  "mongoConnectionRetryDelay": 300,
   "authentication": {
     "secret": "805efcfa3a1d788f1a467d3873ed559d3702ed4ba7213bb46585e0a0015d12467de438a86f1f39658b90cdfbcc8779d973b946cad73955624c82c4d642fb9d20c2c7d35dbb5de3df323ab69185a4e38f306f2b81b3b1ddd847b37adff5a811aebdd5a1ebe3a70c4a85bc83f686053937960627d74476cdedb732459885dad7527bbfe7e73fe7d5341dfabb1ee418d42ffa602a35292990b012ae47f8b8cb0822646ffbb215378047d97cd187d8e0e473e3b63d8c1f4d4cdddf0075e1f6fa8f0ed11a25c52d45c74c7f6eac9d342ced8a3a45f4086d032a563c7cc0868db23456a3e7cd0d79f74efdf125633175d02c733030c6c0b8257044e63c3de821bd74ce",
     "strategies": [
