@@ -140,12 +140,14 @@ export default {
               Authorization: this.$store.state.jwt
             }
           }
+        }).then((response) => {
+          console.log(response.data);
+          let formData = new FormData();
+          formData.append('photos', this.photos[0]);
+          formData.append('id', response.data._id);
+          let config = { headers: { 'Content-Type': 'multipart/form-data' } }
+          axios.post(`${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`, formData , config);
         });
-
-        let formData = new FormData()
-        formData.append('photos', this.photos[0])
-        let config = { headers: { 'Content-Type': 'multipart/form-data' } }
-        axios.post(`${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`, formData , config);
               }
             },
     onFileSelected() {

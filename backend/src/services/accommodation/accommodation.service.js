@@ -24,7 +24,7 @@ module.exports = function (app) {
   // Multer storage config
   var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './uploads/')
+      cb(null, './public/uploads/')
     },
     filename: function (req, file, cb) {
       crypto.pseudoRandomBytes(16, function (err, raw) {
@@ -34,15 +34,18 @@ module.exports = function (app) {
   });
   var upload = multer({ storage: storage });
 
-  // Image upload endpoint
-  app.use('/accommodation/upload', upload.array('photos'), {
-    create(req, res, next) {
-          if (req.file) {
-              console.log('Uploading File');
-          }
-     return Promise.resolve(res);
-    }
-  });
+// Image upload endpoint
+  app.post('/accommodation/upload',  upload.array('photos'), (req, res, next) => {
+  const files = req.files
+  console.log(req.files);
+  if (!files) {
+    const error = new Error('Please upload a file')
+    error.httpStatusCode = 400
+    return next(error)
+  }
+    res.send(files)
+
+})
 
   // Get our initialized service so that we can register hooks
   const service = app.service('accommodation');
