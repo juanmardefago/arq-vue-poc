@@ -5,10 +5,11 @@ import AccommodationForm from "./components/AccommodationForm.vue";
 import SignIn from "./components/SignIn.vue";
 import SignUp from "./components/SignUp.vue";
 import AccommodationDetail from "./components/AccommodationDetail.vue";
+import store from "./store";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: "/accommodations",
@@ -34,6 +35,21 @@ export default new Router({
       path: "/signup",
       name: "signup",
       component: SignUp
+    },
+    {
+      path: "*",
+      redirect: "/signin"
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  const { logged } = store.state;
+  if (!logged && to.path !== "/signin") {
+    next("/signin");
+  } else {
+    next();
+  }
+});
+
+export default router;
