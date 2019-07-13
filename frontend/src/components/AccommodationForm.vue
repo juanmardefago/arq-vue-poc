@@ -44,6 +44,14 @@
             :items="categoryOptions"
             label="Categoria"
           />
+          <input
+            type="file"
+            ref="photos"
+            accept="image/*"
+            multiple="multiple"
+            @change="onFileSelected"
+          />
+          <br />
           <v-btn
             type="button"
             color="primary"
@@ -76,7 +84,8 @@ export default {
       categoryOptions: [1, 2, 3, 4, 5],
       breakfastFee: 0,
       halfPensionFee: 0,
-      fullPensionFee: 0
+      fullPensionFee: 0,
+      photos: []
     };
   },
   computed: {
@@ -109,9 +118,8 @@ export default {
     },
     submitData() {
       if (this.isValid) {
-        axios.post(
-          `${process.env.VUE_APP_BACKEND_URL}/accommodation`,
-          {
+        axios
+          .post(`${process.env.VUE_APP_BACKEND_URL}/accommodation`, {
             location: {
               province: {
                 name: this.provinceValue.nombre,
@@ -135,9 +143,22 @@ export default {
             headers: {
               Authorization: this.$store.state.jwt
             }
+          }).then((response) => {
+          if (this.photos.length > 0) {
+            let formData = new FormData();
+            if (this.photos[0]) { formData.append('photos', this.photos[0]) };
+            if (this.photos[1]) { formData.append('photos', this.photos[1]) };
+            if (this.photos[2]) { formData.append('photos', this.photos[2]) };
+            formData.append('id', response.data._id);
+            let config = { headers: { 'Content-Type': 'multipart/form-data' } }
+            console.log(formData);
+            axios.post(`${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`, formData , config);
           }
-        );
+        });
       }
+    },
+    onFileSelected() {
+      this.photos = this.$refs.photos.files;
     }
   },
   mounted() {

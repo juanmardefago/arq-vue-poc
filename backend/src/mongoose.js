@@ -11,7 +11,7 @@ function connectToMongo(uri, options, retriesLeft, retryDelay) {
 
 module.exports = function (app) {
   var uri = app.get('mongodb');
-  var options = { useCreateIndex: true, useNewUrlParser: true };
+  var options = { useCreateIndex: true, useNewUrlParser: true, useFindAndModify: false };
   var retries = app.get('mongoConnectionRetries');
   var retryDelay = app.get('mongoConnectionRetryDelay');
 
