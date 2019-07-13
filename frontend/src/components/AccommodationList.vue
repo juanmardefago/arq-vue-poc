@@ -10,8 +10,6 @@
         <v-btn color="info" @click="navigateTo('accommodation', acc.item._id)"
           >Detalle</v-btn
         >
-      </td>
-      <td class="text-xs-center">
         <v-btn color="warning" v-on:click="deleteAccommodation(acc.item)"
           >Borrar</v-btn
         >
@@ -40,7 +38,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`${process.env.VUE_APP_BACKEND_URL}/accommodation`, {
+      .get(`${process.env.VUE_APP_BACKEND_URL}/accommodation?approved=true`, {
         headers: {
           Authorization: this.$store.state.jwt
         }

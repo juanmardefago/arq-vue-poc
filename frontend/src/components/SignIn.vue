@@ -54,7 +54,7 @@ export default {
             password: this.password
           })
           .then(res => {
-            this.$store.commit("signIn", res.data.accessToken);
+            this.$store.commit("signIn", res.data);
           });
       }
     }

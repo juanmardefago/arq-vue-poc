@@ -1,10 +1,12 @@
 export default {
-  signIn: function(state, jwt) {
-    state.jwt = jwt;
+  signIn: function(state, data) {
+    state.jwt = data.accessToken;
+    state.permissions = data.permissions;
     state.logged = true;
   },
   signout: function(state) {
     state.jwt = "";
+    state.permissions = "";
     state.logged = false;
   }
 };
