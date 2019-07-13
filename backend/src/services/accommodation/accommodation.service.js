@@ -6,6 +6,8 @@ const hooks = require('./accommodation.hooks');
 var multer  = require('multer');
 const crypto = require('crypto');
 const mime = require('mime');
+// Image delete
+var fs = require('fs');
 
 module.exports = function (app) {
   const Model = createModel(app);
@@ -47,6 +49,16 @@ module.exports = function (app) {
     Model.findByIdAndUpdate(id, { "photos": paths }, {}, (res) => {
       return res;
     });
+})
+
+//Image delete endpoint
+app.post('/accommodation/delete_upload', (req, res, next) => {
+    const targetFile = `./${req.body.imgPath}`;
+    fs.unlink(targetFile, (err) => {
+    if (err) {
+      console.log(err);
+  });
+  res.end();
 })
 
   // Get our initialized service so that we can register hooks
