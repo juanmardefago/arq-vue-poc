@@ -143,8 +143,7 @@ export default {
             headers: {
               Authorization: this.$store.state.jwt
             }
-          }
-        }).then((response) => {
+          }).then((response) => {
           if (this.photos.length > 0) {
             let formData = new FormData();
             if (this.photos[0]) { formData.append('photos', this.photos[0]) };
