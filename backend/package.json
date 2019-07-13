@@ -44,7 +44,8 @@
     "mongodb-core": "^3.1.7",
     "mongoose": "^5.5.9",
     "serve-favicon": "^2.5.0",
-    "winston": "^3.0.0"
+    "winston": "^3.0.0",
+    "winston-daily-rotate-file": "^3.10.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

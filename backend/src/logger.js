@@ -1,16 +1,41 @@
 const { createLogger, format, transports } = require('winston');
+const dailyRotateFile = require('winston-daily-rotate-file');
 
-// Configure the Winston logger. For the complete documentation see https://github.com/winstonjs/winston
-const logger = createLogger({
-  // To see more detailed errors, change this to 'debug'
-  level: 'info',
-  format: format.combine(
-    format.splat(),
-    format.simple()
+let logger;
+const logFormat = format.combine(
+  format.colorize(),
+  format.splat(),
+  format.timestamp(),
+  format.printf(
+    log => `[${log.timestamp}] ${log.level}: ${log.message}`
   ),
-  transports: [
-    new transports.Console()
-  ],
-});
+);
+
+if(process.env.NODE_ENV === 'production') {
+  const consoleOptions = {
+    level: 'debug'
+  };
+  const fileOptions = {
+    level: 'info',
+    maxFiles: '30d',
+    dirname: './logs'
+  };
+
+  logger = createLogger({
+    format: logFormat,
+    transports: [
+      new transports.Console(consoleOptions),
+      new dailyRotateFile(fileOptions),
+    ],
+  });
+} else {
+  logger = createLogger({
+    level: 'debug',
+    format: logFormat,
+    transports: [
+      new transports.Console()
+    ],
+  });
+}
 
 module.exports = logger;
