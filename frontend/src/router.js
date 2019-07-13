@@ -45,7 +45,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const { logged } = store.state;
-  if (!logged && to.path !== "/signin") {
+  if (!logged && to.path !== "/signin" && to.path !== "/signup") {
     next("/signin");
   } else {
     next();
