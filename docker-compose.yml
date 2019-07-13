@@ -10,6 +10,8 @@ services:
   backend:
     image: juanmardefago/arq1-backend
     network_mode: host
+    volumes:
+      - ./data/logs:/home/feathers/logs
     environment:
       - MONGODB_URL=mongodb://localhost:27018/backend
       - PORT=3030
@@ -20,4 +22,4 @@ services:
     ports:
       - "27018:27017"
     volumes:
-      - ./data:/data/db
+      - ./data/db:/data/db
