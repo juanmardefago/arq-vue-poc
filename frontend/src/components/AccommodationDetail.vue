@@ -67,15 +67,14 @@
             </v-list-tile>
           </v-list>
         </v-card>
-        <v-carousel
-        :cycle="false"
-        v-if="this.accommodation.photos.length > 0">
+        <v-carousel :cycle="false" v-if="this.accommodation.photos.length > 0">
           <v-carousel-item
-            v-for="(photo,i) in this.accommodation.photos"
-            :key="i">
-              <img :src="'http://localhost:3030/' + photo" style="width:100%;" />
-        </v-carousel-item>
-  </v-carousel>
+            v-for="(photo, i) in this.accommodation.photos"
+            :key="i"
+          >
+            <img :src="'http://localhost:3030/' + photo" style="width:100%;" />
+          </v-carousel-item>
+        </v-carousel>
       </v-flex>
     </v-layout>
   </v-container>
@@ -88,8 +87,15 @@ export default {
   name: "AccommodationDetail",
   data() {
     return {
-       accommodation: { location: { province: { name: '' }, city: { name: '' }, address: '' }, category: 0, type: '', breakfast: '',
-       fullPension: '',  halfPension: '', photos: [] }
+      accommodation: {
+        location: { province: { name: "" }, city: { name: "" }, address: "" },
+        category: 0,
+        type: "",
+        breakfast: "",
+        fullPension: "",
+        halfPension: "",
+        photos: []
+      }
     };
   },
   methods: {},
@@ -123,12 +129,14 @@ export default {
           fullPension: data.pensions.fullPension,
           halfPension: data.pensions.halfPension,
           photos: data.photos
-          }
-        });
+        };
+      });
   }
 };
 </script>
 <!-- overwriting carousel style to center images -->
 <style>
-.v-responsive__content { margin: auto; }
+.v-responsive__content {
+  margin: auto;
+}
 </style>

@@ -26,7 +26,7 @@ module.exports = function (app) {
   // Multer storage config
   var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './public/uploads/')
+      cb(null, './public/uploads/');
     },
     filename: function (req, file, cb) {
       crypto.pseudoRandomBytes(16, function (err, raw) {
@@ -36,30 +36,30 @@ module.exports = function (app) {
   });
   var upload = multer({ storage: storage });
 
-// Image upload endpoint
-  app.post('/accommodation/upload',  upload.array('photos'), (req, res, next) => {
-    const files = req.files
-    console.log(req.files);
-    res.send(files)
+  // Image upload endpoint
+  app.post('/accommodation/upload',  upload.array('photos'), (req, res) => {
+    const files = req.files;
+    res.send(files);
     const id = req.body.id;
     const paths = files.map((photo) => {
       return photo.path;
     });
-    console.log(paths);
-    Model.findByIdAndUpdate(id, { "photos": paths }, {}, (res) => {
+    Model.findByIdAndUpdate(id, { 'photos': paths }, {}, (res) => {
       return res;
     });
-})
-
-//Image delete endpoint
-app.post('/accommodation/delete_upload', (req, res, next) => {
-    const targetFile = `./${req.body.imgPath}`;
-    fs.unlink(targetFile, (err) => {
-    if (err) {
-      console.log(err);
   });
-  res.end();
-})
+
+  //Image delete endpoint
+  app.post('/accommodation/delete_upload', (req, res) => {
+    const targetFile = `./${req.body.imgPath}`;
+    fs.unlink(targetFile);
+    Model.findById(req.body.id, function (err, doc) {
+      const photos = doc.photos.filter(p => p !== req.body.imgPath);
+      doc.photos = photos;
+      doc.save();
+    });
+    res.end();
+  });
 
   // Get our initialized service so that we can register hooks
   const service = app.service('accommodation');

@@ -44,15 +44,20 @@
             :items="categoryOptions"
             label="Categoria"
           />
-            <input
-              type="file"
-              ref="photos"
-              accept="image/*"
-              multiple="multiple"
-              @change="onFileSelected"
-            >
-            <br/>
-          <v-btn type="button" color="primary" v-if="isValid" v-on:click="submitData">
+          <input
+            type="file"
+            ref="photos"
+            accept="image/*"
+            multiple="multiple"
+            @change="onFileSelected"
+          />
+          <br />
+          <v-btn
+            type="button"
+            color="primary"
+            v-if="isValid"
+            v-on:click="submitData"
+          >
             Guardar
           </v-btn>
         </v-flex>
@@ -113,9 +118,8 @@ export default {
     },
     submitData() {
       if (this.isValid) {
-        axios.post(
-          `${process.env.VUE_APP_BACKEND_URL}/accommodation`,
-          {
+        axios
+          .post(`${process.env.VUE_APP_BACKEND_URL}/accommodation`, {
             location: {
               province: {
                 name: this.provinceValue.nombre,
@@ -152,8 +156,8 @@ export default {
             axios.post(`${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`, formData , config);
           }
         });
-              }
-            },
+      }
+    },
     onFileSelected() {
       this.photos = this.$refs.photos.files;
     }

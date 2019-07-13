@@ -28,13 +28,13 @@ export default {
   data() {
     return {
       headers: [
-         { text: 'Provincia', align: 'center', value: '', sortable: false },
-         { text: 'Ciudad', align: 'center', value: '', sortable: false },
-         { text: 'Dirección', align: 'center', value: '', sortable: false },
-         { text: 'Categoría', align: 'center', value: '', sortable: false },
-         { text: 'Tipo', align: 'center', value: '', sortable: false },
-         { text: '', align: 'center', value: '', sortable: false }
-       ],
+        { text: "Provincia", align: "center", value: "", sortable: false },
+        { text: "Ciudad", align: "center", value: "", sortable: false },
+        { text: "Dirección", align: "center", value: "", sortable: false },
+        { text: "Categoría", align: "center", value: "", sortable: false },
+        { text: "Tipo", align: "center", value: "", sortable: false },
+        { text: "", align: "center", value: "", sortable: false }
+      ],
       accommodations: []
     };
   },
