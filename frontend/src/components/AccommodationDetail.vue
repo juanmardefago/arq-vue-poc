@@ -67,11 +67,12 @@
             </v-list-tile>
           </v-list>
         </v-card>
-        <v-carousel>
+        <v-carousel
+        :cycle="false"
+        v-if="this.accommodation.photos.length > 0">
           <v-carousel-item
             v-for="(photo,i) in this.accommodation.photos"
-            :key="i"
-            cycle=false>
+            :key="i">
               <img :src="'http://localhost:3030/' + photo" style="width:100%;" />
         </v-carousel-item>
   </v-carousel>

@@ -141,12 +141,16 @@ export default {
             }
           }
         }).then((response) => {
-          console.log(response.data);
-          let formData = new FormData();
-          formData.append('photos', this.photos[0]);
-          formData.append('id', response.data._id);
-          let config = { headers: { 'Content-Type': 'multipart/form-data' } }
-          axios.post(`${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`, formData , config);
+          if (this.photos.length > 0) {
+            let formData = new FormData();
+            if (this.photos[0]) { formData.append('photos', this.photos[0]) };
+            if (this.photos[1]) { formData.append('photos', this.photos[1]) };
+            if (this.photos[2]) { formData.append('photos', this.photos[2]) };
+            formData.append('id', response.data._id);
+            let config = { headers: { 'Content-Type': 'multipart/form-data' } }
+            console.log(formData);
+            axios.post(`${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`, formData , config);
+          }
         });
               }
             },
