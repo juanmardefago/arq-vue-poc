@@ -24,5 +24,11 @@ export default {
       state.unapprovedAccommodations.indexOf(accommodation),
       1
     );
+  },
+  setProvinceOptions(state, provinceOptions) {
+    state.provinceOptions = provinceOptions;
+  },
+  setCityOptions(state, cityOptions) {
+    state.cityOptions = cityOptions;
   }
 };

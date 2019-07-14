@@ -67,16 +67,14 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "AccommodationForm",
   data() {
     return {
       provinceValue: null,
-      provinceOptions: [],
       cityValue: null,
-      cityOptions: [],
       addressValue: null,
       accommodationValue: null,
       accommodationOptions: ["Hotel", "Posada", "Cabaña", "Otro"],
@@ -97,90 +95,72 @@ export default {
         this.accommodationValue &&
         this.categoryValue
       );
-    }
+    },
+    ...mapState(["provinceOptions", "cityOptions"])
   },
   methods: {
     fetchCitiesForProvince() {
       if (this.provinceValue) {
-        axios
-          .get(
-            `${process.env.VUE_APP_CITIES_API_URL}&provincia=${
-              this.provinceValue.id
-            }`
-          )
-          .then(response => {
-            this.cityOptions = response.data.municipios;
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        this.fetchCityOptions(this.provinceValue.id);
       }
     },
     submitData() {
       if (this.isValid) {
-        axios
-          .post(
-            `${process.env.VUE_APP_BACKEND_URL}/accommodation`,
-            {
-              location: {
-                province: {
-                  name: this.provinceValue.nombre,
-                  id: this.provinceValue.id
-                },
-                city: {
-                  name: this.cityValue.nombre,
-                  id: this.cityValue.id
-                },
-                address: this.addressValue
-              },
-              category: this.categoryValue,
-              type: this.accommodationValue,
-              pensions: {
-                breakfast: this.breakfastFee,
-                halfPension: this.halfPensionFee,
-                fullPension: this.fullPensionFee
-              }
+        this.createAccommodation({
+          location: {
+            province: {
+              name: this.provinceValue.nombre,
+              id: this.provinceValue.id
             },
-            {
-              headers: {
-                Authorization: this.$store.state.jwt
-              }
+            city: {
+              name: this.cityValue.nombre,
+              id: this.cityValue.id
+            },
+            address: this.addressValue
+          },
+          category: this.categoryValue,
+          type: this.accommodationValue,
+          pensions: {
+            breakfast: this.breakfastFee,
+            halfPension: this.halfPensionFee,
+            fullPension: this.fullPensionFee
+          }
+        }).then(response => {
+          if (this.photos.length > 0) {
+            let formData = new FormData();
+            if (this.photos[0]) {
+              formData.append("photos", this.photos[0]);
             }
-          )
-          .then(response => {
-            if (this.photos.length > 0) {
-              let formData = new FormData();
-              if (this.photos[0]) {
-                formData.append("photos", this.photos[0]);
-              }
-              if (this.photos[1]) {
-                formData.append("photos", this.photos[1]);
-              }
-              if (this.photos[2]) {
-                formData.append("photos", this.photos[2]);
-              }
-              formData.append("id", response.data._id);
-              let config = {
-                headers: { "Content-Type": "multipart/form-data" }
-              };
-              console.log(formData);
-              axios.post(
-                `${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`,
-                formData,
-                config
-              );
+            if (this.photos[1]) {
+              formData.append("photos", this.photos[1]);
             }
-          });
+            if (this.photos[2]) {
+              formData.append("photos", this.photos[2]);
+            }
+            formData.append("id", response.data._id);
+            let config = {
+              headers: { "Content-Type": "multipart/form-data" }
+            };
+            this.uploadPhotoForm({
+              formData,
+              config
+            });
+          }
+        });
       }
     },
     onFileSelected() {
       this.photos = this.$refs.photos.files;
-    }
+    },
+    ...mapActions([
+      "fetchProvinceOptions",
+      "fetchCityOptions",
+      "uploadPhotoForm",
+      "createAccommodation"
+    ])
   },
   mounted() {
-    axios.get(process.env.VUE_APP_PROVINCE_API_URL).then(response => {
-      this.provinceOptions = response.data.provincias;
-    });
+    this.fetchProvinceOptions();
   }
 };
 </script>

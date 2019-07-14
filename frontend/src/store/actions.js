@@ -59,5 +59,38 @@ export default {
       .then(() => {
         commit("removeAccommodationFromLists", item);
       });
+  },
+  createAccommodation({ state }, accommodation) {
+    return axios.post(
+      `${process.env.VUE_APP_BACKEND_URL}/accommodation`,
+      accommodation,
+      {
+        headers: {
+          Authorization: state.jwt
+        }
+      }
+    );
+  },
+  fetchProvinceOptions({ commit }) {
+    axios.get(process.env.VUE_APP_PROVINCE_API_URL).then(response => {
+      commit("setProvinceOptions", response.data.provincias);
+    });
+  },
+  fetchCityOptions({ commit }, province) {
+    axios
+      .get(`${process.env.VUE_APP_CITIES_API_URL}&provincia=${province}`)
+      .then(response => {
+        commit("setCityOptions", response.data.municipios);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  uploadPhotoForm(context, data) {
+    axios.post(
+      `${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`,
+      data.formData,
+      data.config
+    );
   }
 };

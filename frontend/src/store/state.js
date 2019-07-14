@@ -3,5 +3,7 @@ export default {
   logged: false,
   permissions: "",
   unapprovedAccommodations: [],
-  approvedAccommodations: []
+  approvedAccommodations: [],
+  provinceOptions: [],
+  cityOptions: []
 };
