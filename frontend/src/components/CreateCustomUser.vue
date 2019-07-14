@@ -1,7 +1,15 @@
 <template>
   <div>
-    <h1 v-if="!registered">Registrate!</h1>
-    <h1 v-if="registered">Te resgistraste satisfactoriamente!</h1>
+    <h1 v-if="!registered">Crea un nuevo usuario</h1>
+    <h1 v-if="registered">Usuario creado exitosamente!</h1>
+    <v-btn
+      type="button"
+      color="primary"
+      v-if="registered"
+      v-on:click="clearData"
+    >
+      Crear otro?
+    </v-btn>
     <v-form v-if="!registered">
       <v-container>
         <v-layout>
@@ -13,6 +21,11 @@
               :append-icon="show1 ? 'visibility' : 'visibility_off'"
               :type="show1 ? 'text' : 'password'"
               @click:append="show1 = !show1"
+            />
+            <v-select
+              v-model="permissions"
+              :items="permissionOptions"
+              label="Permisos"
             />
             <v-btn
               type="button"
@@ -38,6 +51,8 @@ export default {
     return {
       email: "",
       password: "",
+      permissions: "",
+      permissionOptions: ["user", "admin"],
       show1: false,
       registered: false
     };
@@ -52,16 +67,22 @@ export default {
           .post(`${process.env.VUE_APP_BACKEND_URL}/users`, {
             email: this.email,
             password: this.password,
-            permissions: "user"
+            permissions: this.permissions
           })
           .then(() => (this.registered = true));
       }
+    },
+    clearData() {
+      this.email = "";
+      this.password = "";
+      this.permissions = "";
+      this.registered = false;
     }
   },
   computed: {
     ...mapState(["logged"]),
     isValid() {
-      return this.email && this.password;
+      return this.email && this.password && this.permissions;
     }
   }
 };
