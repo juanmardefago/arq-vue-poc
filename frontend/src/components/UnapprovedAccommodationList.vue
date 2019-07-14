@@ -11,7 +11,7 @@
       <td class="text-xs-center">{{ acc.item.category }}</td>
       <td class="text-xs-center">{{ acc.item.type }}</td>
       <td class="text-xs-center">
-        <v-btn color="green" @click="approveAccommodation(acc.item)"
+        <v-btn color="success" @click="approveAccommodation(acc.item)"
           >Aprobar</v-btn
         >
         <v-btn color="warning" @click="deleteAccommodation(acc.item)"
