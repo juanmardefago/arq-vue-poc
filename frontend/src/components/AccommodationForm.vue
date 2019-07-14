@@ -119,42 +119,58 @@ export default {
     submitData() {
       if (this.isValid) {
         axios
-          .post(`${process.env.VUE_APP_BACKEND_URL}/accommodation`, {
-            location: {
-              province: {
-                name: this.provinceValue.nombre,
-                id: this.provinceValue.id
+          .post(
+            `${process.env.VUE_APP_BACKEND_URL}/accommodation`,
+            {
+              location: {
+                province: {
+                  name: this.provinceValue.nombre,
+                  id: this.provinceValue.id
+                },
+                city: {
+                  name: this.cityValue.nombre,
+                  id: this.cityValue.id
+                },
+                address: this.addressValue
               },
-              city: {
-                name: this.cityValue.nombre,
-                id: this.cityValue.id
-              },
-              address: this.addressValue
+              category: this.categoryValue,
+              type: this.accommodationValue,
+              pensions: {
+                breakfast: this.breakfastFee,
+                halfPension: this.halfPensionFee,
+                fullPension: this.fullPensionFee
+              }
             },
-            category: this.categoryValue,
-            type: this.accommodationValue,
-            pensions: {
-              breakfast: this.breakfastFee,
-              halfPension: this.halfPensionFee,
-              fullPension: this.fullPensionFee
+            {
+              headers: {
+                Authorization: this.$store.state.jwt
+              }
             }
-          },
-          {
-            headers: {
-              Authorization: this.$store.state.jwt
+          )
+          .then(response => {
+            if (this.photos.length > 0) {
+              let formData = new FormData();
+              if (this.photos[0]) {
+                formData.append("photos", this.photos[0]);
+              }
+              if (this.photos[1]) {
+                formData.append("photos", this.photos[1]);
+              }
+              if (this.photos[2]) {
+                formData.append("photos", this.photos[2]);
+              }
+              formData.append("id", response.data._id);
+              let config = {
+                headers: { "Content-Type": "multipart/form-data" }
+              };
+              console.log(formData);
+              axios.post(
+                `${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`,
+                formData,
+                config
+              );
             }
-          }).then((response) => {
-          if (this.photos.length > 0) {
-            let formData = new FormData();
-            if (this.photos[0]) { formData.append('photos', this.photos[0]) };
-            if (this.photos[1]) { formData.append('photos', this.photos[1]) };
-            if (this.photos[2]) { formData.append('photos', this.photos[2]) };
-            formData.append('id', response.data._id);
-            let config = { headers: { 'Content-Type': 'multipart/form-data' } }
-            console.log(formData);
-            axios.post(`${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`, formData , config);
-          }
-        });
+          });
       }
     },
     onFileSelected() {
