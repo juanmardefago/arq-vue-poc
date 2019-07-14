@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapActions } from "vuex";
 
 export default {
   name: "AccommodationDetail",
@@ -98,40 +98,31 @@ export default {
       }
     };
   },
-  methods: {},
+  methods: {
+    ...mapActions(["getAccommodationData"])
+  },
   mounted() {
-    axios
-      .get(
-        `${process.env.VUE_APP_BACKEND_URL}/accommodation/${
-          this.$route.params.id
-        }`,
-        {
-          headers: {
-            Authorization: this.$store.state.jwt
-          }
-        }
-      )
-      .then(response => {
-        let data = response.data;
-        let pensions = data.pensions || {};
-        this.accommodation = {
-          location: {
-            province: {
-              name: data.location.province.name
-            },
-            city: {
-              name: data.location.city.name
-            },
-            address: data.location.address
+    this.getAccommodationData(this.$route.params.id).then(response => {
+      let data = response.data;
+      let pensions = data.pensions || {};
+      this.accommodation = {
+        location: {
+          province: {
+            name: data.location.province.name
           },
-          category: data.category,
-          type: data.type,
-          breakfast: pensions.breakfast || "-",
-          fullPension: pensions.fullPension || "-",
-          halfPension: pensions.halfPension || "-",
-          photos: data.photos || []
-        };
-      });
+          city: {
+            name: data.location.city.name
+          },
+          address: data.location.address
+        },
+        category: data.category,
+        type: data.type,
+        breakfast: pensions.breakfast || "-",
+        fullPension: pensions.fullPension || "-",
+        halfPension: pensions.halfPension || "-",
+        photos: data.photos || []
+      };
+    });
   }
 };
 </script>

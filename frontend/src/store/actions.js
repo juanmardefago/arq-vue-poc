@@ -92,5 +92,12 @@ export default {
       data.formData,
       data.config
     );
+  },
+  getAccommodationData({ state }, id) {
+    return axios.get(`${process.env.VUE_APP_BACKEND_URL}/accommodation/${id}`, {
+      headers: {
+        Authorization: state.jwt
+      }
+    });
   }
 };
