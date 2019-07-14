@@ -1,5 +1,9 @@
 <template>
-  <v-data-table :headers="headers" :items="accommodations" class="elevation-1">
+  <v-data-table
+    :headers="headers"
+    :items="approvedAccommodations"
+    class="elevation-1"
+  >
     <template align="" v-slot:items="acc">
       <td>{{ acc.item.location.province.name }}</td>
       <td class="text-xs-center">{{ acc.item.location.city.name }}</td>
@@ -19,7 +23,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "AccommodationList",
@@ -32,39 +36,20 @@ export default {
         { text: "Categoría", align: "center", value: "", sortable: false },
         { text: "Tipo", align: "center", value: "", sortable: false },
         { text: "", align: "center", value: "", sortable: false }
-      ],
-      accommodations: []
+      ]
     };
   },
   mounted() {
-    axios
-      .get(`${process.env.VUE_APP_BACKEND_URL}/accommodation?approved=true`, {
-        headers: {
-          Authorization: this.$store.state.jwt
-        }
-      })
-      .then(response => {
-        this.accommodations = response.data.data;
-      });
+    this.getApprovedAccommodations();
   },
   methods: {
-    deleteAccommodation(item) {
-      axios
-        .delete(
-          `${process.env.VUE_APP_BACKEND_URL}/accommodation/${item._id}`,
-          {
-            headers: {
-              Authorization: this.$store.state.jwt
-            }
-          }
-        )
-        .then(() => {
-          this.accommodations.splice(this.accommodations.indexOf(item), 1);
-        });
-    },
     navigateTo(path, id) {
       this.$router.push(`${path}/${id}`);
-    }
+    },
+    ...mapActions(["getApprovedAccommodations", "deleteAccommodation"])
+  },
+  computed: {
+    ...mapState(["approvedAccommodations"])
   }
 };
 </script>

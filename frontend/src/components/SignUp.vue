@@ -29,8 +29,7 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "SignUp",
@@ -48,15 +47,14 @@ export default {
     },
     submitData() {
       if (this.isValid) {
-        axios
-          .post(`${process.env.VUE_APP_BACKEND_URL}/users`, {
-            email: this.email,
-            password: this.password,
-            permissions: "user"
-          })
-          .then(() => (this.registered = true));
+        this.createUser({
+          email: this.email,
+          password: this.password,
+          permissions: "user"
+        }).then(() => (this.registered = true));
       }
-    }
+    },
+    ...mapActions(["createUser"])
   },
   computed: {
     ...mapState(["logged"]),
