@@ -129,7 +129,7 @@ export default {
           breakfast: pensions.breakfast || "-",
           fullPension: pensions.fullPension || "-",
           halfPension: pensions.halfPension || "-",
-          photos: data.photos
+          photos: data.photos || []
         };
       });
   }
