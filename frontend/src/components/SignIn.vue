@@ -55,9 +55,7 @@ export default {
         });
       }
     },
-    ...mapActions([
-      "authenticate"
-    ])
+    ...mapActions(["authenticate"])
   },
   computed: {
     ...mapState(["logged"]),

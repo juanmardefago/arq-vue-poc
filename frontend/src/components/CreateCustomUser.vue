@@ -75,9 +75,7 @@ export default {
       this.permissions = "";
       this.registered = false;
     },
-    ...mapActions([
-      "createUser"
-    ])
+    ...mapActions(["createUser"])
   },
   computed: {
     ...mapState(["logged"]),

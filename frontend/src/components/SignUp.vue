@@ -54,9 +54,7 @@ export default {
         }).then(() => (this.registered = true));
       }
     },
-    ...mapActions([
-      "createUser"
-    ])
+    ...mapActions(["createUser"])
   },
   computed: {
     ...mapState(["logged"]),

@@ -1,5 +1,7 @@
 export default {
   jwt: "",
   logged: false,
-  permissions: ""
+  permissions: "",
+  unapprovedAccommodations: [],
+  approvedAccommodations: []
 };
