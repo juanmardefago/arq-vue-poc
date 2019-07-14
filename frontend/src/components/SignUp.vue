@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1 v-if="!logged">Registrate!</h1>
-    <h1 v-if="logged">Te resgistraste satisfactoriamente!</h1>
-    <v-form v-if="!logged">
+    <h1 v-if="!registered">Registrate!</h1>
+    <h1 v-if="registered">Te resgistraste satisfactoriamente!</h1>
+    <v-form v-if="!registered">
       <v-container>
         <v-layout>
           <v-flex>
@@ -38,7 +38,8 @@ export default {
     return {
       email: "",
       password: "",
-      show1: false
+      show1: false,
+      registered: false
     };
   },
   methods: {
@@ -47,11 +48,13 @@ export default {
     },
     submitData() {
       if (this.isValid) {
-        axios.post(`${process.env.VUE_APP_BACKEND_URL}/users`, {
-          email: this.email,
-          password: this.password,
-          permissions: "user"
-        });
+        axios
+          .post(`${process.env.VUE_APP_BACKEND_URL}/users`, {
+            email: this.email,
+            password: this.password,
+            permissions: "user"
+          })
+          .then(() => (this.registered = true));
       }
     }
   },

@@ -7,47 +7,15 @@
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-navigation-drawer v-model="drawer" absolute temporary>
-        <v-list v-if="logged" class="pt-0" dense>
-          <v-list-tile key="form" @click="navigateTo('accommodations-form')">
-            <v-list-tile-action>
-              <v-icon>edit</v-icon>
-            </v-list-tile-action>
-
-            <v-list-tile-content>
-              <v-list-tile-title>Agregar alojamiento</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile key="list" @click="navigateTo('accommodations')">
-            <v-list-tile-action>
-              <v-icon>list</v-icon>
-            </v-list-tile-action>
-
-            <v-list-tile-content>
-              <v-list-tile-title>Ver alojamientos</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-
-        <v-list v-if="!logged" class="pt-0" dense>
-          <v-list-tile key="form" @click="navigateTo('signin')">
-            <v-list-tile-action>
-              <v-icon>exit_to_app</v-icon>
-            </v-list-tile-action>
-
-            <v-list-tile-content>
-              <v-list-tile-title>Ingresa</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile key="list" @click="navigateTo('signup')">
-            <v-list-tile-action>
-              <v-icon>person_add</v-icon>
-            </v-list-tile-action>
-
-            <v-list-tile-content>
-              <v-list-tile-title>Registrate</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
+        <NavDrawerContentsAdmin
+          v-if="logged && permissions === 'admin'"
+          :navigateTo="navigateTo"
+        />
+        <NavDrawerContentsUser
+          v-if="logged && permissions === 'user'"
+          :navigateTo="navigateTo"
+        />
+        <NavDrawerContentsNotLogged v-if="!logged" :navigateTo="navigateTo" />
       </v-navigation-drawer>
     </div>
     <router-view />
@@ -56,9 +24,17 @@
 
 <script>
 import { mapState } from "vuex";
+import NavDrawerContentsNotLogged from "@/components/NavDrawerContentsNotLogged";
+import NavDrawerContentsUser from "@/components/NavDrawerContentsUser";
+import NavDrawerContentsAdmin from "@/components/NavDrawerContentsAdmin";
 
 export default {
   name: "Home",
+  components: {
+    NavDrawerContentsAdmin,
+    NavDrawerContentsUser,
+    NavDrawerContentsNotLogged
+  },
   data() {
     return {
       drawer: false
@@ -72,7 +48,7 @@ export default {
       this.drawer = !this.drawer;
     }
   },
-  computed: mapState(["logged"])
+  computed: mapState(["logged", "permissions"])
 };
 </script>
 

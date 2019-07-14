@@ -113,6 +113,7 @@ export default {
       )
       .then(response => {
         let data = response.data;
+        let pensions = data.pensions || {};
         this.accommodation = {
           location: {
             province: {
@@ -125,9 +126,9 @@ export default {
           },
           category: data.category,
           type: data.type,
-          breakfast: data.pensions.breakfast,
-          fullPension: data.pensions.fullPension,
-          halfPension: data.pensions.halfPension,
+          breakfast: pensions.breakfast || "-",
+          fullPension: pensions.fullPension || "-",
+          halfPension: pensions.halfPension || "-",
           photos: data.photos
         };
       });

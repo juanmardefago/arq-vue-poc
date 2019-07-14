@@ -1,4 +1,5 @@
 export default {
   jwt: "",
-  logged: false
+  logged: false,
+  permissions: ""
 };

@@ -1,8 +1,16 @@
 <template>
   <div>
-    <h1 v-if="!logged">Ingresa!</h1>
-    <h1 v-if="logged">Ingresaste satisfactoriamente!</h1>
-    <v-form v-if="!logged">
+    <h1 v-if="!registered">Crea un nuevo usuario</h1>
+    <h1 v-if="registered">Usuario creado exitosamente!</h1>
+    <v-btn
+      type="button"
+      color="primary"
+      v-if="registered"
+      v-on:click="clearData"
+    >
+      Crear otro?
+    </v-btn>
+    <v-form v-if="!registered">
       <v-container>
         <v-layout>
           <v-flex>
@@ -14,13 +22,18 @@
               :type="show1 ? 'text' : 'password'"
               @click:append="show1 = !show1"
             />
+            <v-select
+              v-model="permissions"
+              :items="permissionOptions"
+              label="Permisos"
+            />
             <v-btn
               type="button"
               color="primary"
               v-if="isValid"
               v-on:click="submitData"
             >
-              Ingresar
+              Registrar
             </v-btn>
           </v-flex>
         </v-layout>
@@ -33,12 +46,15 @@ import axios from "axios";
 import { mapState } from "vuex";
 
 export default {
-  name: "SignIn",
+  name: "SignUp",
   data() {
     return {
       email: "",
       password: "",
-      show1: false
+      permissions: "",
+      permissionOptions: ["user", "admin"],
+      show1: false,
+      registered: false
     };
   },
   methods: {
@@ -48,21 +64,25 @@ export default {
     submitData() {
       if (this.isValid) {
         axios
-          .post(`${process.env.VUE_APP_BACKEND_URL}/authentication`, {
-            strategy: "local",
+          .post(`${process.env.VUE_APP_BACKEND_URL}/users`, {
             email: this.email,
-            password: this.password
+            password: this.password,
+            permissions: this.permissions
           })
-          .then(res => {
-            this.$store.commit("signIn", res.data);
-          });
+          .then(() => (this.registered = true));
       }
+    },
+    clearData() {
+      this.email = "";
+      this.password = "";
+      this.permissions = "";
+      this.registered = false;
     }
   },
   computed: {
     ...mapState(["logged"]),
     isValid() {
-      return this.email && this.password;
+      return this.email && this.password && this.permissions;
     }
   }
 };
