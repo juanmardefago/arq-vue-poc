@@ -7,10 +7,10 @@
       <td class="text-xs-center">{{ acc.item.category }}</td>
       <td class="text-xs-center">{{ acc.item.type }}</td>
       <td class="text-xs-center">
-        <v-btn color="info" @click="navigateTo('accommodation', acc.item._id)"
-          >Detalle</v-btn
+        <v-btn color="green" @click="approveAccommodation(acc.item)"
+          >Aprobar</v-btn
         >
-        <v-btn color="warning" v-on:click="deleteAccommodation(acc.item)"
+        <v-btn color="warning" @click="deleteAccommodation(acc.item)"
           >Borrar</v-btn
         >
       </td>
@@ -66,17 +66,21 @@ export default {
       this.$router.push(`${path}/${id}`);
     },
     approveAccommodation(item) {
-      axios.put(
-        `${process.env.VUE_APP_BACKEND_URL}/accommodation/${item._id}`,
-        {
-          approved: true
-        },
-        {
-          headers: {
-            Authorization: this.$store.state.jwt
+      axios
+        .patch(
+          `${process.env.VUE_APP_BACKEND_URL}/accommodation/${item._id}`,
+          {
+            approved: true
+          },
+          {
+            headers: {
+              Authorization: this.$store.state.jwt
+            }
           }
-        }
-      );
+        )
+        .then(() => {
+          this.accommodations.splice(this.accommodations.indexOf(item), 1);
+        });
     }
   }
 };
