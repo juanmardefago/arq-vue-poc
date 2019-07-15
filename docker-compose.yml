@@ -12,6 +12,7 @@ services:
     network_mode: host
     volumes:
       - ./data/logs:/home/feathers/logs
+      - ./data/public:/home/feathers/public
     environment:
       - MONGODB_URL=mongodb://localhost:27018/backend
       - PORT=3030
