@@ -72,7 +72,7 @@
             v-for="(photo, i) in this.accommodation.photos"
             :key="i"
           >
-            <img :src="'http://localhost:3030/' + photo" style="width:100%;" />
+            <img :src="backendUrl + '/' + photo" style="width:100%;" />
           </v-carousel-item>
         </v-carousel>
       </v-flex>
@@ -97,6 +97,11 @@ export default {
         photos: []
       }
     };
+  },
+  computed: {
+    backendUrl() {
+      return process.env.VUE_APP_BACKEND_URL;
+    }
   },
   methods: {
     ...mapActions(["getAccommodationData"])
