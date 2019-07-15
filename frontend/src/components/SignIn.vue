@@ -1,11 +1,20 @@
 <template>
   <div>
-    <h1 v-if="!logged">Ingresa!</h1>
-    <h1 v-if="logged">Ingresaste satisfactoriamente!</h1>
-    <v-form v-if="!logged">
-      <v-container>
-        <v-layout>
-          <v-flex>
+    <v-container justify-center>
+      <v-layout align-center column>
+        <v-flex>
+          <h1 v-if="!logged">Ingresa</h1>
+          <v-alert
+            v-if="loginFailed"
+            :value="true"
+            dismissible
+            color="error"
+            icon="warning"
+            outline
+          >
+            Mail o contraseña incorrecta.
+          </v-alert>
+          <v-form v-if="!logged" style="width: 500px">
             <v-text-field label="Email" v-model="email" />
             <v-text-field
               label="Contraseña"
@@ -22,10 +31,10 @@
             >
               Ingresar
             </v-btn>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-form>
+          </v-form>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 <script>
@@ -37,7 +46,8 @@ export default {
     return {
       email: "",
       password: "",
-      show1: false
+      show1: false,
+      loginFailed: false
     };
   },
   methods: {
@@ -46,13 +56,19 @@ export default {
     },
     submitData() {
       if (this.isValid) {
+        this.loginFailed = false;
         this.authenticate({
           strategy: "local",
           email: this.email,
           password: this.password
-        }).then(res => {
-          this.$store.commit("signIn", res.data);
-        });
+        })
+          .then((res) => {
+            this.$store.commit("signIn", res.data);
+            this.$router.push("accommodations");
+          })
+          .catch(() => {
+            this.loginFailed = true;
+          });
       }
     },
     ...mapActions(["authenticate"])

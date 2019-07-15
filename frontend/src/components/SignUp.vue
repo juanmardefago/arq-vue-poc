@@ -1,11 +1,20 @@
 <template>
   <div>
-    <h1 v-if="!registered">Registrate!</h1>
-    <h1 v-if="registered">Te resgistraste satisfactoriamente!</h1>
-    <v-form v-if="!registered">
-      <v-container>
-        <v-layout>
-          <v-flex>
+    <v-container justify-center>
+      <v-layout align-center column>
+        <v-flex>
+          <h1 v-if="!registered">Registrate!</h1>
+          <v-alert
+            v-if="registerFailed"
+            :value="true"
+            dismissible
+            color="error"
+            icon="warning"
+            outline
+          >
+            Ha ocurrido un error.
+          </v-alert>
+          <v-form v-if="!registered" style="width: 500px">
             <v-text-field label="Email" v-model="email" />
             <v-text-field
               label="Contraseña"
@@ -22,10 +31,10 @@
             >
               Registrar
             </v-btn>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-form>
+          </v-form>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 <script>
@@ -38,7 +47,8 @@ export default {
       email: "",
       password: "",
       show1: false,
-      registered: false
+      registered: false,
+      registerFailed: false
     };
   },
   methods: {
@@ -47,11 +57,19 @@ export default {
     },
     submitData() {
       if (this.isValid) {
+        this.registerFailed = false;
         this.createUser({
           email: this.email,
           password: this.password,
           permissions: "user"
-        }).then(() => (this.registered = true));
+        })
+          .then(() => {
+            this.registered = true;
+            this.$router.push("accommodations");
+          })
+          .catch(() => {
+            this.registerFailed = true;
+          });
       }
     },
     ...mapActions(["createUser"])

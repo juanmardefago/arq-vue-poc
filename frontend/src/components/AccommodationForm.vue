@@ -1,8 +1,17 @@
 <template>
   <v-form>
-    <v-container>
-      <v-layout>
+    <v-container justify-center>
+      <v-layout align-center column>
         <v-flex>
+          <v-alert
+            v-if="created"
+            :value="true"
+            color="info"
+            icon="info"
+            outline
+          >
+            Alojamiento creado con exito.
+          </v-alert>
           <v-select
             v-model="provinceValue"
             :items="provinceOptions"
@@ -55,10 +64,18 @@
           <v-btn
             type="button"
             color="primary"
-            v-if="isValid"
+            v-if="isValid && !created"
             v-on:click="submitData"
           >
             Guardar
+          </v-btn>
+          <v-btn
+            type="button"
+            color="primary"
+            v-if="created"
+            v-on:click="goBack"
+          >
+            Volver
           </v-btn>
         </v-flex>
       </v-layout>
@@ -83,7 +100,8 @@ export default {
       breakfastFee: 0,
       halfPensionFee: 0,
       fullPensionFee: 0,
-      photos: []
+      photos: [],
+      created: false
     };
   },
   computed: {
@@ -146,12 +164,17 @@ export default {
               config
             });
           }
+          this.created = true;
         });
       }
     },
     onFileSelected() {
       this.photos = this.$refs.photos.files;
     },
+    goBack() {
+      this.$router.replace({ name: 'accommodations' });
+    }
+    ,
     ...mapActions([
       "fetchProvinceOptions",
       "fetchCityOptions",
