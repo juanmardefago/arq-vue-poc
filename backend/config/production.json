@@ -1,5 +1,5 @@
 {
-  "host": "localhost",
+  "host": "http://arq1-app.mooo.com",
   "port": "PORT",
   "mongodb": "MONGODB_URL"
 }
