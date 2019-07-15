@@ -39,14 +39,28 @@
         <v-list-tile-title>Crear nuevo usuario</v-list-tile-title>
       </v-list-tile-content>
     </v-list-tile>
+
+    <v-list-tile key="signout" @click="signout(); navigateTo('signin');">
+      <v-list-tile-action>
+        <v-icon>keyboard_backspace</v-icon>
+      </v-list-tile-action>
+
+      <v-list-tile-content>
+        <v-list-tile-title>Cerrar sesión</v-list-tile-title>
+      </v-list-tile-content>
+    </v-list-tile>
   </v-list>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   name: "NavDrawerContentsLogged",
   props: {
     navigateTo: Function
+  },
+  methods: {
+    ...mapMutations(["signout"])
   }
 };
 </script>
