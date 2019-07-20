@@ -73,7 +73,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .modal {
   position: absolute;
   width: 100%;

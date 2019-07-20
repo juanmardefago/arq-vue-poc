@@ -2,16 +2,17 @@
   <v-form>
     <v-container justify-center>
       <v-layout align-center column>
-        <v-flex>
-          <v-alert
-            v-if="created"
-            :value="true"
-            color="info"
-            icon="info"
-            outline
-          >
-            Alojamiento creado con exito.
-          </v-alert>
+        <v-alert
+          v-if="created"
+          :value="true"
+          color="info"
+          icon="info"
+          outline
+          centered
+        >
+          Alojamiento creado con exito.
+        </v-alert>
+        <v-flex v-if="!created">
           <v-select
             v-model="provinceValue"
             :items="provinceOptions"
@@ -69,15 +70,29 @@
           >
             Guardar
           </v-btn>
-          <v-btn
-            type="button"
-            color="primary"
-            v-if="created"
-            v-on:click="goBack"
-          >
-            Volver
-          </v-btn>
         </v-flex>
+      </v-layout>
+      <AccommodationDetail v-if="created" :accommodationId="createdId" />
+      <v-layout
+        row
+        justify-center
+      >
+        <v-btn
+          type="button"
+          color="primary"
+          v-if="created"
+          v-on:click="goBack"
+        >
+          Volver
+        </v-btn>
+        <v-btn
+          type="button"
+          color="primary"
+          v-if="created"
+          v-on:click="createAnother"
+        >
+          Crear otro
+        </v-btn>
       </v-layout>
     </v-container>
   </v-form>
@@ -85,9 +100,13 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import AccommodationDetail from "./AccommodationDetail.vue";
 
 export default {
   name: "AccommodationForm",
+  components: {
+    AccommodationDetail,
+  },
   data() {
     return {
       provinceValue: null,
@@ -101,7 +120,8 @@ export default {
       halfPensionFee: 0,
       fullPensionFee: 0,
       photos: [],
-      created: false
+      created: false,
+      createdId: ""
     };
   },
   computed: {
@@ -164,6 +184,7 @@ export default {
               config
             });
           }
+          this.createdId = response.data._id;
           this.created = true;
         });
       }
@@ -173,6 +194,19 @@ export default {
     },
     goBack() {
       this.$router.replace({ name: "accommodations" });
+    },
+    createAnother() {
+      this.provinceValue = null;
+      this.cityValue = null;
+      this.addressValue = null;
+      this.accommodationValue = null;
+      this.categoryValue = 5;
+      this.breakfastFee = 0;
+      this.halfPensionFee = 0;
+      this.fullPensionFee = 0;
+      this.photos = [];
+      this.created = false;
+      this.createdId = "";
     },
     ...mapActions([
       "fetchProvinceOptions",
