@@ -12,7 +12,7 @@
         >
           Alojamiento creado con exito.
         </v-alert>
-        <v-flex v-if="!created">
+        <v-flex v-if="!created" @keyup.enter="submitData">
           <v-select
             v-model="provinceValue"
             :items="provinceOptions"
