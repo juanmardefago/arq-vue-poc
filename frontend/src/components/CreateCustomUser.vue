@@ -11,7 +11,7 @@
       Crear otro?
     </v-btn>
     <v-form v-if="!registered">
-      <v-container justify-center>
+      <v-container justify-center @keyup.enter="submitData">
         <v-layout align-center column>
           <v-flex>
             <v-text-field label="Email" v-model="email" />

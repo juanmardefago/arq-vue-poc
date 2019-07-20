@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container justify-center>
+    <v-container justify-center @keyup.enter="submitData">
       <v-layout align-center column>
         <v-flex>
           <h1 v-if="!logged">Ingresa</h1>

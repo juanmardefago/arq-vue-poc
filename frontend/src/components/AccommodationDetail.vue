@@ -85,6 +85,7 @@
           <v-carousel
             :cycle="false"
             v-if="this.accommodation.photos.length > 0"
+            hide-delimiters
           >
             <v-carousel-item
               v-for="(photo, i) in this.accommodation.photos"
@@ -177,5 +178,14 @@ export default {
   height: 35px;
   width: 35px;
   min-width: 35px;
+}
+</style>
+<style>
+.v-responsive__content {
+  margin: auto;
+}
+
+.v-carousel__item {
+  background: white;
 }
 </style>
