@@ -62,7 +62,7 @@ export default {
           email: this.email,
           password: this.password
         })
-          .then((res) => {
+          .then(res => {
             this.$store.commit("signIn", res.data);
             this.$router.push("accommodations");
           })

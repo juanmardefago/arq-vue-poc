@@ -45,7 +45,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  name: "SignUp",
+  name: "CreateCustomUser",
   data() {
     return {
       email: "",

@@ -19,7 +19,13 @@
       </v-list-tile-content>
     </v-list-tile>
 
-    <v-list-tile key="signout" @click="signout(); navigateTo('signin');">
+    <v-list-tile
+      key="signout"
+      @click="
+        signout();
+        navigateTo('signin');
+      "
+    >
       <v-list-tile-action>
         <v-icon>keyboard_backspace</v-icon>
       </v-list-tile-action>

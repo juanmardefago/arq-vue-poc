@@ -5,7 +5,6 @@ import UnapprovedAccommodationList from "./components/UnapprovedAccommodationLis
 import AccommodationForm from "./components/AccommodationForm.vue";
 import SignIn from "./components/SignIn.vue";
 import SignUp from "./components/SignUp.vue";
-import AccommodationDetail from "./components/AccommodationDetail.vue";
 import CreateCustomUser from "./components/CreateCustomUser.vue";
 import store from "./store";
 
@@ -17,11 +16,6 @@ const router = new Router({
       path: "/accommodations",
       name: "accommodations",
       component: AccommodationList
-    },
-    {
-      path: "/accommodation/:id",
-      name: "accommodationDetail",
-      component: AccommodationDetail
     },
     {
       path: "/accommodations-form",

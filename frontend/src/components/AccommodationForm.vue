@@ -172,9 +172,8 @@ export default {
       this.photos = this.$refs.photos.files;
     },
     goBack() {
-      this.$router.replace({ name: 'accommodations' });
-    }
-    ,
+      this.$router.replace({ name: "accommodations" });
+    },
     ...mapActions([
       "fetchProvinceOptions",
       "fetchCityOptions",
