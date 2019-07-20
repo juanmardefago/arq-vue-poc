@@ -1,5 +1,5 @@
 <template>
-  <v-layout align-center justify-center row>
+  <v-layout align-center justify-center row @click.self="closeDetail">
     <v-flex xs12 sm6 md4 lg3 style="position: relative;">
       <v-btn fab v-if="onClose" @click="closeDetail" class="close-btn">
         <v-icon>close</v-icon>
@@ -85,7 +85,6 @@
           <v-carousel
             :cycle="false"
             v-if="this.accommodation.photos.length > 0"
-            hide-delimiters
           >
             <v-carousel-item
               v-for="(photo, i) in this.accommodation.photos"
@@ -131,16 +130,18 @@ export default {
   methods: {
     ...mapActions(["getAccommodationData"]),
     closeDetail() {
-      (this.accommodation = {
-        location: { province: { name: "" }, city: { name: "" }, address: "" },
-        category: 0,
-        type: "",
-        breakfast: "",
-        fullPension: "",
-        halfPension: "",
-        photos: []
-      }),
+      if(this.onClose) {
+        this.accommodation = {
+          location: { province: { name: "" }, city: { name: "" }, address: "" },
+          category: 0,
+          type: "",
+          breakfast: "",
+          fullPension: "",
+          halfPension: "",
+          photos: []
+        };
         this.onClose();
+      }
     }
   },
   mounted() {
