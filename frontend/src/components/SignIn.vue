@@ -1,6 +1,13 @@
 <template>
   <div>
-    <v-container justify-center>
+    <v-progress-circular
+      :size="70"
+      :width="7"
+      color="blue"
+      indeterminate
+      v-if="loading"
+    ></v-progress-circular>
+    <v-container justify-center @keyup.enter="submitData" v-if="!loading">
       <v-layout align-center column>
         <v-flex>
           <h1 v-if="!logged">Ingresa</h1>
@@ -47,7 +54,8 @@ export default {
       email: "",
       password: "",
       show1: false,
-      loginFailed: false
+      loginFailed: false,
+      loading: false
     };
   },
   methods: {
@@ -56,18 +64,21 @@ export default {
     },
     submitData() {
       if (this.isValid) {
+        this.loading = true;
         this.loginFailed = false;
         this.authenticate({
           strategy: "local",
           email: this.email,
           password: this.password
         })
-          .then((res) => {
+          .then(res => {
             this.$store.commit("signIn", res.data);
+            this.loading = false;
             this.$router.push("accommodations");
           })
           .catch(() => {
             this.loginFailed = true;
+            this.loading = false;
           });
       }
     },

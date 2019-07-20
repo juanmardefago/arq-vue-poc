@@ -3,11 +3,17 @@ export default {
     state.jwt = data.accessToken;
     state.permissions = data.permissions;
     state.logged = true;
+    sessionStorage.jwt = data.accessToken;
+    sessionStorage.permissions = data.permissions;
+    sessionStorage.logged = true;
   },
   signout(state) {
     state.jwt = "";
     state.permissions = "";
     state.logged = false;
+    sessionStorage.jwt = "";
+    sessionStorage.permissions = "";
+    sessionStorage.logged = false;
   },
   setUnapprovedAccommodations(state, accommodations) {
     state.unapprovedAccommodations = accommodations;
