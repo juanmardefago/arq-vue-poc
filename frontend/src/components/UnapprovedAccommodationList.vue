@@ -24,12 +24,8 @@
           <v-btn color="info" @click="viewDetailedAccomodation(acc.item._id)"
             >Detalle</v-btn
           >
-          <v-btn color="success" @click="approveAccommodation(acc.item)"
-            >Aprobar</v-btn
-          >
-          <v-btn color="warning" @click="deleteAccommodation(acc.item)"
-            >Borrar</v-btn
-          >
+          <v-btn color="success" @click="approveAcc(acc.item)">Aprobar</v-btn>
+          <v-btn color="warning" @click="deleteAcc(acc.item)">Borrar</v-btn>
         </td>
       </template>
     </v-data-table>
@@ -89,6 +85,16 @@ export default {
     },
     onClose() {
       this.selectedAccomodation = "";
+    },
+    approveAcc(itemId) {
+      this.approveAccommodation(itemId).then(() => {
+        this.totalItems -= 1;
+      });
+    },
+    deleteAcc(itemId) {
+      this.deleteAccommodation(itemId).then(() => {
+        this.totalItems -= 1;
+      });
     },
     ...mapActions([
       "deleteAccommodation",

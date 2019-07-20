@@ -27,7 +27,7 @@
           <v-btn
             v-if="permissions === 'admin'"
             color="warning"
-            v-on:click="deleteAccommodation(acc.item)"
+            v-on:click="deleteAcc(acc.item)"
             >Borrar</v-btn
           >
         </td>
@@ -86,6 +86,11 @@ export default {
     },
     onClose() {
       this.selectedAccomodation = "";
+    },
+    deleteAcc(itemId) {
+      this.deleteAccommodation(itemId).then(() => {
+        this.totalItems -= 1;
+      });
     },
     ...mapActions(["getApprovedAccommodations", "deleteAccommodation"])
   },

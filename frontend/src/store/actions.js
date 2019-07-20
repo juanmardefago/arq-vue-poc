@@ -49,7 +49,7 @@ export default {
       });
   },
   deleteAccommodation({ commit, state }, item) {
-    axios
+    return axios
       .delete(`${process.env.VUE_APP_BACKEND_URL}/accommodation/${item._id}`, {
         headers: {
           Authorization: state.jwt
@@ -60,7 +60,7 @@ export default {
       });
   },
   approveAccommodation({ commit, state }, item) {
-    axios
+    return axios
       .patch(
         `${process.env.VUE_APP_BACKEND_URL}/accommodation/${item._id}`,
         {
