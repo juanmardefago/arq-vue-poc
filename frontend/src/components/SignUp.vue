@@ -1,9 +1,25 @@
 <template>
   <div>
-    <v-container justify-center @keyup.enter="submitData">
+    <v-progress-circular
+      :size="70"
+      :width="7"
+      color="blue"
+      indeterminate
+      v-if="loading"
+    ></v-progress-circular>
+    <v-container justify-center @keyup.enter="submitData" v-if="!loading">
       <v-layout align-center column>
         <v-flex>
           <h1 v-if="!registered">Registrate!</h1>
+          <h1 v-if="registered">Usuario registrado exitosamente</h1>
+          <v-btn
+            type="button"
+            color="primary"
+            v-if="registered"
+            v-on:click="navigateTo('/signin')"
+          >
+            Ingresar
+          </v-btn>
           <v-alert
             v-if="registerFailed"
             :value="true"
@@ -48,7 +64,8 @@ export default {
       password: "",
       show1: false,
       registered: false,
-      registerFailed: false
+      registerFailed: false,
+      loading: false
     };
   },
   methods: {
@@ -57,6 +74,7 @@ export default {
     },
     submitData() {
       if (this.isValid) {
+        this.loading = true;
         this.registerFailed = false;
         this.createUser({
           email: this.email,
@@ -65,10 +83,11 @@ export default {
         })
           .then(() => {
             this.registered = true;
-            this.$router.push("accommodations");
+            this.loading = false;
           })
           .catch(() => {
             this.registerFailed = true;
+            this.loading = false;
           });
       }
     },
