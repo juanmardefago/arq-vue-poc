@@ -9,6 +9,9 @@
     <v-data-table
       :headers="headers"
       :items="unapprovedAccommodations"
+      :pagination.sync="pagination"
+      :total-items="totalItems"
+      :loading="loading"
       class="elevation-1"
     >
       <template align="" v-slot:items="acc">
@@ -52,11 +55,30 @@ export default {
         { text: "Tipo", align: "center", value: "", sortable: false },
         { text: "", align: "center", value: "", sortable: false }
       ],
-      selectedAccomodation: ""
+      selectedAccomodation: "",
+      pagination: {},
+      totalItems: 0,
+      loading: false
     };
   },
+  watch: {
+    pagination: {
+      handler() {
+        this.loading = true;
+        this.getUnapprovedAccommodations(this.pagination).then(response => {
+          this.totalItems = response.total;
+          this.loading = false;
+        });
+      },
+      deep: true
+    }
+  },
   mounted() {
-    this.getUnapprovedAccommodations();
+    this.loading = true;
+    this.getUnapprovedAccommodations(this.pagination).then(response => {
+      this.totalItems = response.total;
+      this.loading = false;
+    });
   },
   methods: {
     navigateTo(path, id) {

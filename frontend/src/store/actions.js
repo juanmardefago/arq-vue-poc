@@ -10,26 +10,42 @@ export default {
       user
     );
   },
-  getUnapprovedAccommodations({ commit, state }) {
-    axios
-      .get(`${process.env.VUE_APP_BACKEND_URL}/accommodation?approved=false`, {
-        headers: {
-          Authorization: state.jwt
+  getUnapprovedAccommodations({ commit, state }, paginationData) {
+    return axios
+      .get(
+        `${
+          process.env.VUE_APP_BACKEND_URL
+        }/accommodation?approved=false&$limit=${
+          paginationData.rowsPerPage
+        }&$skip=${paginationData.rowsPerPage * (paginationData.page - 1)}`,
+        {
+          headers: {
+            Authorization: state.jwt
+          }
         }
-      })
+      )
       .then(response => {
         commit("setUnapprovedAccommodations", response.data.data);
+        return response.data;
       });
   },
-  getApprovedAccommodations({ commit, state }) {
-    axios
-      .get(`${process.env.VUE_APP_BACKEND_URL}/accommodation?approved=true`, {
-        headers: {
-          Authorization: state.jwt
+  getApprovedAccommodations({ commit, state }, paginationData) {
+    return axios
+      .get(
+        `${
+          process.env.VUE_APP_BACKEND_URL
+        }/accommodation?approved=true&$limit=${
+          paginationData.rowsPerPage
+        }&$skip=${paginationData.rowsPerPage * (paginationData.page - 1)}`,
+        {
+          headers: {
+            Authorization: state.jwt
+          }
         }
-      })
+      )
       .then(response => {
         commit("setApprovedAccommodations", response.data.data);
+        return response.data;
       });
   },
   deleteAccommodation({ commit, state }, item) {
