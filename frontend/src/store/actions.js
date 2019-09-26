@@ -102,11 +102,16 @@ export default {
         console.log(err);
       });
   },
-  uploadPhotoForm(context, data) {
-    axios.post(
-      `${process.env.VUE_APP_BACKEND_URL}/accommodation/upload`,
+  uploadPhotoForm({ state }, data) {
+    axios.patch(
+      `${process.env.VUE_APP_BACKEND_URL}/accommodation/${data.id}`,
       data.formData,
-      data.config
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: state.jwt
+        }
+      }
     );
   },
   getAccommodationData({ state }, id) {

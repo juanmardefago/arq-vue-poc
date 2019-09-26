@@ -1,6 +1,7 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 const permissionsCheck = require('../../hooks/permissions');
 const approvePermissions = require('../../hooks/approvePermissions');
+const imageUpload = require('../../hooks/imageUpload');
 
 module.exports = {
   before: {
@@ -9,7 +10,7 @@ module.exports = {
     get: [],
     create: [ approvePermissions('admin') ],
     update: [ approvePermissions('admin') ],
-    patch: [ approvePermissions('admin') ],
+    patch: [ approvePermissions('admin'), imageUpload() ],
     remove: [ permissionsCheck('admin') ]
   },
 

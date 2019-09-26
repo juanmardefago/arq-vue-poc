@@ -183,13 +183,9 @@ export default {
             if (this.photos[2]) {
               formData.append("photos", this.photos[2]);
             }
-            formData.append("id", response.data._id);
-            let config = {
-              headers: { "Content-Type": "multipart/form-data" }
-            };
             this.uploadPhotoForm({
               formData,
-              config
+              id: response.data._id
             });
           }
           this.loading = false;
