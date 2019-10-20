@@ -51,6 +51,7 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "jest": "^24.7.1",
+    "newrelic": "^5.13.1",
     "nodemon": "^1.19.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
