@@ -10,7 +10,7 @@ module.exports = {
     get: [],
     create: [ approvePermissions('admin') ],
     update: [ approvePermissions('admin') ],
-    patch: [ approvePermissions('admin'), imageUpload() ],
+    patch: [ imageUpload(), approvePermissions('admin') ],
     remove: [ permissionsCheck('admin') ]
   },
 
