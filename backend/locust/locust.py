@@ -5,13 +5,11 @@ class LoginListBehavior(TaskSet):
     auth_token = ""
 
     def on_start(self):
-        """ on_start is called when a Locust start before any task is scheduled """
         self.login()
 
     @task(1)
     def accomodations(self):
-        """ on_start is called when a Locust start before any task is scheduled """
-        #self.login()
+        self.accommodations()
 
     def login(self):
         response = self.client.post("/authentication", {
@@ -20,7 +18,12 @@ class LoginListBehavior(TaskSet):
           "password": "admin"
         }).json()
 
-        self.auth_token = response
+        self.auth_token = response["accessToken"]
+
+    def accommodations(self):
+        response = self.client.get("/accommodation", 
+        headers= { "Authorization": self.auth_token }).json()
+        print(response)
      
 
 class WebsiteUser(HttpLocust):
