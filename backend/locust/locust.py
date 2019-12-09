@@ -11,8 +11,9 @@ class AdminTaskSet(TaskSet):
     auth_token = ""
 
     def on_start(self):
-        self.create_user()
+        #self.create_user()
         self.login()
+        pass
 
     def login(self):
         response = self.client.post("/authentication", {
@@ -58,6 +59,13 @@ class AdminTaskSet(TaskSet):
         headers= { "Authorization": self.auth_token })
         return response
 
+    def edit_accommodation(self, id, data):
+        response = self.client.patch("/accommodation/" + str(id),
+        json=data,
+        headers= { "Authorization": self.auth_token },
+        name="/accommodation/:id")
+        return response
+
     def create_user(self):
         response = self.client.post("/users",
         json={
@@ -86,9 +94,10 @@ class AdminTaskSet(TaskSet):
         response = self.get_approved_accommodations_list()
 
         if response.status_code == 200:
-            json = response.json();
-            json.data[random.randrange(0, json.total, 1)]._id
+            json = response.json()
+            random_accommodation_id = json['data'][random.randrange(0, int(json['limit']), 1)]['_id']
+            self.edit_accommodation(random_accommodation_id, {"address": "sarasa" + str(random.randrange(0, 999999999999, 1))})
 
 class WebsiteAdmin(HttpLocust):
     task_set = AdminTaskSet
-    wait_time = between(2, 5)
+    wait_time = between(5, 10)
