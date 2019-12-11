@@ -11,7 +11,7 @@ class AdminTaskSet(TaskSet):
     auth_token = ""
 
     def on_start(self):
-        #self.create_user()
+        self.create_user()
         self.login()
         pass
 
@@ -77,11 +77,11 @@ class AdminTaskSet(TaskSet):
         return response
 
 
-    @task(30)
+    @task(20)
     def list_approved_accommodations_task(self):
         self.get_approved_accommodations_list()
 
-    @task(30)
+    @task(20)
     def list_unapproved_accommodations_task(self):
         self.get_unapproved_accommodations_list()
 
@@ -89,7 +89,7 @@ class AdminTaskSet(TaskSet):
     def create_random_accommodation(self):
         self.create_accommodation()
 
-    @task(100)
+    @task(5)
     def edit_random_accommodation(self):
         response = self.get_approved_accommodations_list()
 
