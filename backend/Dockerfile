@@ -7,10 +7,10 @@ COPY package-lock.json package-lock.json
 COPY config/ config/
 COPY public/ public/
 COPY src/ src/
-ENV NODE_ENV 'production'
+COPY newrelic.js newrelic.js
 ENV PORT '3030'
 
 EXPOSE 3030
 
-RUN npm ci --only=production
+RUN npm i
 CMD ["node", "src/index.js"]
